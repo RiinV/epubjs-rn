@@ -35,7 +35,7 @@ var _Rendition = _interopRequireDefault(require("./Rendition"));
 
 var _Streamer = _interopRequireDefault(require("./Streamer"));
 
-var _jsxFileName = "/Users/katerynapeikova/projects/ebooks/epubjs-rn/src/Epub.js";
+var _jsxFileName = "/Users/kaarel/Dev/Knowledge/TEMP/epubjs-rn/src/Epub.js";
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 

@@ -27,7 +27,7 @@ var _eventEmitter = _interopRequireDefault(require("event-emitter"));
 
 var _utils = require("./utils");
 
-var _jsxFileName = "/Users/katerynapeikova/projects/ebooks/epubjs-rn/src/Rendition.js";
+var _jsxFileName = "/Users/kaarel/Dev/Knowledge/TEMP/epubjs-rn/src/Rendition.js";
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 

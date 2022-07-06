@@ -28,7 +28,7 @@ var _Streamer = _interopRequireDefault(require("./Streamer"));
 var _excluded = ["url", "flow", "style", "onBookChange", "onExternalLinkPress", "onShouldStartLoadWithRequest", "onNavigationStateChange", "onInitStart", "onInitEnd", "onReady", "onError", "retryState", "backgroundColor", "themes", "theme", "contentInset", "setRenditionRef"];
 
 var _this = this,
-    _jsxFileName = "/Users/katerynapeikova/projects/ebooks/epubjs-rn/src/EpubReaderWrapper.js";
+    _jsxFileName = "/Users/kaarel/Dev/Knowledge/TEMP/epubjs-rn/src/EpubReaderWrapper.js";
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
