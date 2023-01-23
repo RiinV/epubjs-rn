@@ -272,7 +272,7 @@ window.onerror = function (message, file, line, col, error) {
           var doubleTap = false;
 
           // Add custom css in local Http server root to include font-face files
-          rendition.addStylesheet('http://localhost:3222/custom.css');
+          contents.addStylesheet('http://localhost:3222/custom.css');
 
           function touchStartHandler(e) {
             var f, target;

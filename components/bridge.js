@@ -337,7 +337,7 @@ window.onerror = function (message, file, line, col, error) {
         var lastTap = undefined;
         var preventTap = false;
         var doubleTap = false;
-        rendition.addStylesheet('http://localhost:3222/custom.css');
+        contents.addStylesheet('http://localhost:3222/custom.css');
 
         function touchStartHandler(e) {
           var f, target;
