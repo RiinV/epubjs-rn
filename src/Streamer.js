@@ -15,7 +15,7 @@ const Uri = require('epubjs/lib/utils/url');
 class EpubStreamer {
   constructor(opts) {
     opts = opts || {};
-    this.port = opts.port || '3' + Math.round(Math.random() * 1000);
+    this.port = opts.port || '3222'; // + Math.round(Math.random() * 1000);
     this.root = opts.root || 'www';
 
     this.serverOrigin = 'file://';
@@ -75,27 +75,18 @@ class EpubStreamer {
   add(bookUrl) {
     // let uri = new Uri(bookUrl);
     const filename = this.filename(bookUrl);
+    const epubDir = Dirs.DocumentDir + '/' + filename + '.epub';
+    const targetPath = Dirs.DocumentDir + '/' + this.root + '/' + filename;
 
-    return RNFetchBlob.config({
-      fileCache: true,
-      path: Dirs.DocumentDir + '/' + filename,
-    })
-      .fetch('GET', bookUrl)
-      .then((res) => {
-        const sourcePath = res.path();
-        const targetPath = `${Dirs.DocumentDir}/${this.root}/${filename}`;
-        const url = `${this.serverOrigin}/${filename}/`;
-
-        return unzip(sourcePath, targetPath).then((path) => {
-          this.urls.push(bookUrl);
-          this.locals.push(url);
-          this.paths.push(path);
-
-          // res.flush();
-
-          return url;
-        });
+    if (RNFetchBlob.fs.exists(epubDir)) {
+      return unzip(epubDir, targetPath).then((path) => {
+        const url = this.serverOrigin + '/' + filename + '/';
+        this.urls.push(bookUrl);
+        this.locals.push(url);
+        this.paths.push(path);
+        return url;
       });
+    }
   }
 
   check(bookUrl) {
