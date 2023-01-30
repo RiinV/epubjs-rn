@@ -445,6 +445,7 @@ class Rendition extends Component {
           style={[
             styles.manager,
             {
+              opacity: 0.99,
               backgroundColor: this.props.backgroundColor || '#FFFFFF',
             },
           ]}

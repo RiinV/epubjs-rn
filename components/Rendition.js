@@ -27,7 +27,7 @@ var _eventEmitter = _interopRequireDefault(require('event-emitter'));
 
 var _utils = require('./utils');
 
-var _jsxFileName = '/Users/kaarel/Dev/Knowledge/TEMP/epubjs-rn/src/Rendition.js';
+var _jsxFileName = '/Users/sarpaktug/Documents/SGProjects/epubjs-rn/src/Rendition.js';
 
 function _getRequireWildcardCache(nodeInterop) {
   if (typeof WeakMap !== 'function') {
@@ -646,9 +646,7 @@ var Rendition = (function (_Component) {
         var EMBEDDED_HTML =
           '\n<!DOCTYPE html>\n<html>\n<head>\n  <meta charset="utf-8">\n  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no, viewport-fit=cover">\n  <title>epubjs</title>\n  ' +
           _utils.renditionEmbeddedScripts +
-          '\n  <style>\n    body {\n      margin: 0;\n      -webkit-tap-highlight-color: #006666;\n      -webkit-tap-highlight-color:  #006666 ; background-color: ' +
-          this.props.backgroundColor +
-          ';/* For some Androids */\n    } \n\n    /* For iPhone X Notch */\n    @media only screen\n      and (min-device-width : 375px)\n      and (max-device-width : 812px)\n      and (-webkit-device-pixel-ratio : 3) {\n      body {\n        padding-top: calc(env(safe-area-inset-top) / 2);\n      }\n    }\n  </style>\n</head><body></body></html>\n';
+          '\n  <style>\n    body {\n      margin: 0;\n      -webkit-tap-highlight-color: rgba(0,0,0,0);\n      -webkit-tap-highlight-color: transparent; /* For some Androids */\n    } \n\n    /* For iPhone X Notch */\n    @media only screen\n      and (min-device-width : 375px)\n      and (max-device-width : 812px)\n      and (-webkit-device-pixel-ratio : 3) {\n      body {\n        padding-top: calc(env(safe-area-inset-top) / 2);\n      }\n    }\n  </style>\n</head><body></body></html>\n';
 
         return _react.default.createElement(
           _reactNative.View,
@@ -733,6 +731,7 @@ var styles = _reactNative.StyleSheet.create({
     marginTop: 0,
     flexDirection: 'row',
     flexWrap: 'nowrap',
+    backgroundColor: '#F8F8F8',
   },
   rowContainer: {
     flex: 1,
