@@ -340,6 +340,8 @@ class Epub extends Component {
         onDblPress={this.props.onDblPress}
         onViewAdded={this.props.onViewAdded}
         beforeViewRemoved={this.props.beforeViewRemoved}
+        onTextSelectedContextMenuItems={this.props.onTextSelectedContextMenuItems}
+        onCustomMenuSelection={this.props.onCustomMenuSelection}
         themes={this.props.themes}
         theme={this.props.theme}
         fontSize={this.props.fontSize}

@@ -692,6 +692,8 @@ var Rendition = (function (_Component) {
                 pagingEnabled: this.props.pagingEnabled,
                 onMessage: this._onBridgeMessage.bind(this),
                 contentInsetAdjustmentBehavior: 'never',
+                menuItems: this.props.onTextSelectedContextMenuItems,
+                onCustomMenuSelection: this.props.onCustomMenuSelection,
                 contentInset: this.props.contentInset,
                 scalesPageToFit: this.props.scalesPageToFit || false,
                 automaticallyAdjustContentInsets: false,
