@@ -346,8 +346,8 @@ class Rendition extends Component {
         break;
       }
       case 'selected': {
-        let { cfiRange } = decoded;
-        this._selected(cfiRange);
+        const { cfiRange, selectedRect, selectedText } = decoded;
+        this._selected(cfiRange, selectedRect, selectedText);
         break;
       }
       case 'markClicked': {
@@ -382,9 +382,9 @@ class Rendition extends Component {
     }
   }
 
-  _selected(cfiRange) {
+  _selected(cfiRange, selectedRect, selectedText) {
     if (this.props.onSelected) {
-      this.props.onSelected(cfiRange, this);
+      this.props.onSelected(cfiRange, selectedRect, selectedText);
     }
   }
 

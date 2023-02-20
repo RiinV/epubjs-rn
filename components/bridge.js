@@ -33,6 +33,7 @@ window.onerror = function (message, file, line, col, error) {
     var axis = 'horizontal';
     var isChrome = /Chrome/.test(navigator.userAgent);
     var isWebkit = !isChrome && /AppleWebKit/.test(navigator.userAgent);
+    var selectedCfiRange;
 
     console.log = function () {
       sendMessage({
@@ -51,6 +52,58 @@ window.onerror = function (message, file, line, col, error) {
     function onMessage(e) {
       var message = e.data;
       handleMessage(message);
+    }
+
+    function openColorPaletteAt(left, top) {
+      var divContainer = document.createElement('div');
+      divContainer.setAttribute('id', 'color-picker');
+      divContainer.style.padding = '6px';
+      divContainer.style.backgroundColor = 'red';
+      divContainer.style.display = 'flex';
+      divContainer.style.position = 'absolute';
+      divContainer.style.borderRadius = '16px';
+      divContainer.style.fontSize = '7vw';
+      divContainer.style.top = top + 'px';
+      divContainer.style.left = left + 'px';
+      var colors = ['#CBDFDF', '#E5A7A7', '#FEC933', '#E5F1FC'];
+
+      var _loop = function _loop(i) {
+        var divElement = document.createElement('div');
+        divElement.style.height = '1em';
+        divElement.style.width = '1em';
+        divElement.style.borderRadius = '0.5em';
+        divElement.style.backgroundColor = colors[i];
+
+        divElement.click = function () {
+          rendition.annotations.highlight(selectedCfiRange, null, function () {
+            rendition.annotations.unhighlight(selectedCfiRange);
+          }, '', {
+            fill: colors[i]
+          });
+        };
+
+        if (i < colors.length - 1) {
+          divElement.style.marginRight = '0.5em';
+        }
+
+        divContainer.appendChild(divElement);
+      };
+
+      for (var i = 0; i < colors.length; i++) {
+        _loop(i);
+      }
+
+      var previousPalette = document.getElementById('color-picker');
+
+      if (previousPalette) {
+        previousPalette.remove();
+      }
+
+      document.getElementsByClassName('epub-container')[0].appendChild(divContainer);
+
+      if (divContainer.offsetWidth + left > window.width) {
+        divContainer.style.left = left - Math.abs(divContainer.offsetWidth - left) + 'px';
+      }
     }
 
     function handleMessage(message) {
@@ -181,6 +234,12 @@ window.onerror = function (message, file, line, col, error) {
               q.push(message);
             }
 
+            break;
+          }
+
+        case 'openColorPalette':
+          {
+            openColorPaletteAt(decoded.args[0], decoded.args[1]);
             break;
           }
 
@@ -494,10 +553,16 @@ window.onerror = function (message, file, line, col, error) {
           location: location
         });
       });
-      rendition.on('selected', function (cfiRange) {
+      rendition.on('selected', function (cfiRange, contents) {
+        var range = contents.range(cfiRange);
+        var rect = range.getBoundingClientRect();
+        var selectedCfiRange = cfiRange;
+        var selectedText = contents.document.getSelection().toString();
         sendMessage({
           method: 'selected',
-          cfiRange: cfiRange
+          cfiRange: cfiRange,
+          selectedRect: rect,
+          selectedText: selectedText
         });
       });
       rendition.on('markClicked', function (cfiRange, data) {

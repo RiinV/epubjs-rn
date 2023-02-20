@@ -414,8 +414,13 @@ window.onerror = function (message, file, line, col, error) {
         sendMessage({ method: 'relocated', location: location });
       });
 
-      rendition.on('selected', function (cfiRange) {
-        sendMessage({ method: 'selected', cfiRange: cfiRange });
+      rendition.on('selected', function (cfiRange, contents) {
+        var range = contents.range(cfiRange);
+        var rect = range.getBoundingClientRect();
+        var selectedCfiRange = cfiRange;
+        var selectedText = contents.document.getSelection().toString();
+
+        sendMessage({ method: 'selected', cfiRange: cfiRange, selectedRect: rect, selectedText });
       });
 
       rendition.on('markClicked', function (cfiRange, data) {

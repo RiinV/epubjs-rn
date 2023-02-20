@@ -96,12 +96,18 @@ function _isNativeReflectConstruct() {
     return true;
   }
   try {
-    Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () { }));
+    Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {}));
     return true;
   } catch (e) {
     return false;
   }
 }
+
+var EMBEDDED_HTML =
+  '\n<!DOCTYPE html>\n<html>\n<head>\n  <meta charset="utf-8">\n  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no, viewport-fit=cover">\n  <title>epubjs</title>\n  ' +
+  _utils.renditionEmbeddedScripts +
+  '\n  <style>\n    body {\n      margin: 0;\n      -webkit-tap-highlight-color: rgba(0,0,0,0);\n      -webkit-tap-highlight-color: transparent; /* For some Androids */\n    } \n\n    /* For iPhone X Notch */\n    @media only screen\n      and (min-device-width : 375px)\n      and (max-device-width : 812px)\n      and (-webkit-device-pixel-ratio : 3) {\n      body {\n        padding-top: calc(env(safe-area-inset-top) / 2);\n      }\n    }\n  </style>\n</head><body></body></html>\n';
+
 var Rendition = (function (_Component) {
   (0, _inherits2.default)(Rendition, _Component);
 
@@ -389,7 +395,7 @@ var Rendition = (function (_Component) {
     },
     {
       key: 'destroy',
-      value: function destroy() { },
+      value: function destroy() {},
     },
     {
       key: 'postMessage',
@@ -509,9 +515,11 @@ var Rendition = (function (_Component) {
 
           case 'selected': {
             var _decoded3 = decoded,
-              cfiRange = _decoded3.cfiRange;
+              cfiRange = _decoded3.cfiRange,
+              selectedRect = _decoded3.selectedRect,
+              selectedText = _decoded3.selectedText;
 
-            this._selected(cfiRange);
+            this._selected(cfiRange, selectedRect, selectedText);
 
             break;
           }
@@ -563,10 +571,16 @@ var Rendition = (function (_Component) {
     },
     {
       key: '_selected',
-      value: function _selected(cfiRange) {
+      value: function _selected(cfiRange, selectedRect, selectedText) {
         if (this.props.onSelected) {
-          this.props.onSelected(cfiRange, this);
+          this.props.onSelected(cfiRange, selectedRect, selectedText);
         }
+      },
+    },
+    {
+      key: 'openColorPaletteAt',
+      value: function openColorPaletteAt(x, y) {
+        this.sendToBridge('openColorPalette', [x, y]);
       },
     },
     {
@@ -604,7 +618,7 @@ var Rendition = (function (_Component) {
             __self: this,
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 407,
+              lineNumber: 411,
               columnNumber: 7,
             },
           },
@@ -620,7 +634,7 @@ var Rendition = (function (_Component) {
               __self: this,
               __source: {
                 fileName: _jsxFileName,
-                lineNumber: 408,
+                lineNumber: 412,
                 columnNumber: 9,
               },
             },
@@ -633,7 +647,7 @@ var Rendition = (function (_Component) {
               __self: this,
               __source: {
                 fileName: _jsxFileName,
-                lineNumber: 415,
+                lineNumber: 419,
                 columnNumber: 11,
               },
             }),
@@ -643,10 +657,6 @@ var Rendition = (function (_Component) {
         if (!this.props.url) {
           return loader;
         }
-        var EMBEDDED_HTML =
-          '\n<!DOCTYPE html>\n<html>\n<head>\n  <meta charset="utf-8">\n  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no, viewport-fit=cover">\n  <title>epubjs</title>\n  ' +
-          _utils.renditionEmbeddedScripts +
-          '\n  <style>\n    body {\n      margin: 0;\n      -webkit-tap-highlight-color: rgba(0,0,0,0);\n      -webkit-tap-highlight-color: transparent; /* For some Androids */\n    } \n\n    /* For iPhone X Notch */\n    @media only screen\n      and (min-device-width : 375px)\n      and (max-device-width : 812px)\n      and (-webkit-device-pixel-ratio : 3) {\n      body {\n        padding-top: calc(env(safe-area-inset-top) / 2);\n      }\n    }\n  </style>\n</head><body></body></html>\n';
 
         return _react.default.createElement(
           _reactNative.View,
@@ -664,7 +674,7 @@ var Rendition = (function (_Component) {
             __self: this,
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 429,
+              lineNumber: 433,
               columnNumber: 7,
             },
           },
@@ -707,7 +717,7 @@ var Rendition = (function (_Component) {
                 __self: this,
                 __source: {
                   fileName: _jsxFileName,
-                  lineNumber: 440,
+                  lineNumber: 444,
                   columnNumber: 9,
                 },
               },
