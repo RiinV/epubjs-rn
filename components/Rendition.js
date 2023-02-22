@@ -578,12 +578,6 @@ var Rendition = (function (_Component) {
       },
     },
     {
-      key: 'openColorPaletteAt',
-      value: function openColorPaletteAt(x, y) {
-        this.sendToBridge('openColorPalette', [x, y]);
-      },
-    },
-    {
       key: '_markClicked',
       value: function _markClicked(cfiRange, data) {
         if (this.props.onMarkClicked) {
@@ -618,7 +612,7 @@ var Rendition = (function (_Component) {
             __self: this,
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 411,
+              lineNumber: 407,
               columnNumber: 7,
             },
           },
@@ -634,7 +628,7 @@ var Rendition = (function (_Component) {
               __self: this,
               __source: {
                 fileName: _jsxFileName,
-                lineNumber: 412,
+                lineNumber: 408,
                 columnNumber: 9,
               },
             },
@@ -647,7 +641,7 @@ var Rendition = (function (_Component) {
               __self: this,
               __source: {
                 fileName: _jsxFileName,
-                lineNumber: 419,
+                lineNumber: 415,
                 columnNumber: 11,
               },
             }),
@@ -674,7 +668,7 @@ var Rendition = (function (_Component) {
             __self: this,
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 433,
+              lineNumber: 429,
               columnNumber: 7,
             },
           },
@@ -717,7 +711,7 @@ var Rendition = (function (_Component) {
                 __self: this,
                 __source: {
                   fileName: _jsxFileName,
-                  lineNumber: 444,
+                  lineNumber: 440,
                   columnNumber: 9,
                 },
               },
