@@ -351,8 +351,8 @@ class Rendition extends Component {
         break;
       }
       case 'markClicked': {
-        let { cfiRange, data } = decoded;
-        this._markClicked(cfiRange, data);
+        let { cfiRange, selectedRect } = decoded;
+        this._markClicked(cfiRange, selectedRect);
         break;
       }
       case 'added': {
@@ -388,9 +388,9 @@ class Rendition extends Component {
     }
   }
 
-  _markClicked(cfiRange, data) {
+  _markClicked(cfiRange, selectedRect) {
     if (this.props.onMarkClicked) {
-      this.props.onMarkClicked(cfiRange, data, this);
+      this.props.onMarkClicked(cfiRange, selectedRect, this);
     }
   }
 

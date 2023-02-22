@@ -506,11 +506,13 @@ window.onerror = function (message, file, line, col, error) {
           selectedText: selectedText
         });
       });
-      rendition.on('markClicked', function (cfiRange, data) {
+      rendition.on('markClicked', function (cfiRange, data, contents) {
+        var range = contents.range(cfiRange);
+        var rect = range.getBoundingClientRect();
         sendMessage({
           method: 'markClicked',
           cfiRange: cfiRange,
-          data: data
+          selectedRect: rect
         });
       });
       rendition.on('rendered', function (section) {

@@ -423,8 +423,10 @@ window.onerror = function (message, file, line, col, error) {
         sendMessage({ method: 'selected', cfiRange: cfiRange, selectedRect: rect, selectedText });
       });
 
-      rendition.on('markClicked', function (cfiRange, data) {
-        sendMessage({ method: 'markClicked', cfiRange: cfiRange, data: data });
+      rendition.on('markClicked', function (cfiRange, data, contents) {
+        var range = contents.range(cfiRange);
+        var rect = range.getBoundingClientRect();
+        sendMessage({ method: 'markClicked', cfiRange: cfiRange, selectedRect: rect });
       });
 
       rendition.on('rendered', function (section) {

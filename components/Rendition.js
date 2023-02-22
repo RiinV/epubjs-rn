@@ -527,9 +527,9 @@ var Rendition = (function (_Component) {
           case 'markClicked': {
             var _decoded4 = decoded,
               _cfiRange = _decoded4.cfiRange,
-              data = _decoded4.data;
+              _selectedRect = _decoded4.selectedRect;
 
-            this._markClicked(_cfiRange, data);
+            this._markClicked(_cfiRange, _selectedRect);
 
             break;
           }
@@ -579,9 +579,9 @@ var Rendition = (function (_Component) {
     },
     {
       key: '_markClicked',
-      value: function _markClicked(cfiRange, data) {
+      value: function _markClicked(cfiRange, selectedRect) {
         if (this.props.onMarkClicked) {
-          this.props.onMarkClicked(cfiRange, data, this);
+          this.props.onMarkClicked(cfiRange, selectedRect, this);
         }
       },
     },
