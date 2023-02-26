@@ -598,6 +598,12 @@ var Rendition = (function (_Component) {
       },
     },
     {
+      key: 'updateLayout',
+      value: function updateLayout() {
+        this.sendToBridge('updateLayout');
+      },
+    },
+    {
       key: 'render',
       value: function render() {
         var _this2 = this;
@@ -612,7 +618,7 @@ var Rendition = (function (_Component) {
             __self: this,
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 407,
+              lineNumber: 411,
               columnNumber: 7,
             },
           },
@@ -628,7 +634,7 @@ var Rendition = (function (_Component) {
               __self: this,
               __source: {
                 fileName: _jsxFileName,
-                lineNumber: 408,
+                lineNumber: 412,
                 columnNumber: 9,
               },
             },
@@ -641,7 +647,7 @@ var Rendition = (function (_Component) {
               __self: this,
               __source: {
                 fileName: _jsxFileName,
-                lineNumber: 415,
+                lineNumber: 419,
                 columnNumber: 11,
               },
             }),
@@ -668,7 +674,7 @@ var Rendition = (function (_Component) {
             __self: this,
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 429,
+              lineNumber: 433,
               columnNumber: 7,
             },
           },
@@ -711,7 +717,7 @@ var Rendition = (function (_Component) {
                 __self: this,
                 __source: {
                   fileName: _jsxFileName,
-                  lineNumber: 440,
+                  lineNumber: 444,
                   columnNumber: 9,
                 },
               },

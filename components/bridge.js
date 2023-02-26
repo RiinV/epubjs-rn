@@ -128,6 +128,15 @@ window.onerror = function (message, file, line, col, error) {
             break;
           }
 
+        case 'updateLayout':
+          {
+            if (rendition) {
+              rendition.manager.updateLayout();
+            }
+
+            break;
+          }
+
         case 'setLocations':
           {
             var locations = decoded.args[0];

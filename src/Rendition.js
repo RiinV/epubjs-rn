@@ -402,6 +402,10 @@ class Rendition extends Component {
     this.props.onDisplayed && this.props.onDisplayed();
   }
 
+  updateLayout() {
+    this.sendToBridge('updateLayout');
+  }
+
   render() {
     let loader = (
       <TouchableOpacity onPress={() => this.props.onPress('')} style={styles.loadScreen}>
