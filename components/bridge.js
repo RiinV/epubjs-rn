@@ -321,7 +321,7 @@ window.onerror = function (message, file, line, col, error) {
 
     function openEpub(url, epubOptions, renderOptions) {
       var settings = (0, _extends2.default)({
-        manager: 'continuous',
+        manager: 'default',
         overflow: 'visible',
         method: 'blobUrl',
         fullsize: true,
