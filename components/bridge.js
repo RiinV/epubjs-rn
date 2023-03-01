@@ -27,6 +27,8 @@ window.onerror = function (message, file, line, col, error) {
 
     var q = [];
     var _isReady = false;
+    var touchstartX = 0;
+    var touchendX = 0;
     var book;
     var rendition;
     var minSpreadWidth = 815;
@@ -51,6 +53,24 @@ window.onerror = function (message, file, line, col, error) {
     function onMessage(e) {
       var message = e.data;
       handleMessage(message);
+    }
+
+    function checkDirection() {
+      var _book$rendition$locat = book.rendition.location.start.displayed,
+          page = _book$rendition$locat.page,
+          total = _book$rendition$locat.total;
+
+      if (touchendX < touchstartX) {
+        if (isChrome || page === total) {
+          rendition.next();
+        }
+      }
+
+      if (touchendX > touchstartX) {
+        if (isChrome || page === 1) {
+          rendition.prev();
+        }
+      }
     }
 
     function handleMessage(message) {
@@ -355,6 +375,7 @@ window.onerror = function (message, file, line, col, error) {
           currentPosition.x = e.targetTouches[0].pageX;
           currentPosition.y = e.targetTouches[0].pageY;
           isLongPress = false;
+          touchstartX = e.changedTouches[0].screenX;
 
           if (isWebkit) {
             for (var i = 0; i < e.targetTouches.length; i++) {
@@ -428,6 +449,8 @@ window.onerror = function (message, file, line, col, error) {
         function touchEndHandler(e) {
           var cfi;
           clearTimeout(longPressTimer);
+          touchendX = e.changedTouches[0].screenX;
+          checkDirection();
 
           if (preventTap) {
             preventTap = false;
@@ -529,6 +552,9 @@ window.onerror = function (message, file, line, col, error) {
           method: 'rendered',
           sectionIndex: section.index
         });
+      });
+      rendition.on('rendered', function (section) {
+        document.documentElement.style.overflowX = 'hidden';
       });
       rendition.on('added', function (section) {
         sendMessage({
