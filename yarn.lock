@@ -3310,7 +3310,7 @@ envinfo@^7.7.2:
 
 "epubjs@https://github.com/RiinV/epub.js#rnReader":
   version "0.3.86"
-  resolved "https://github.com/RiinV/epub.js#ce83389ec19132be85cf8d5f54ea4994e4d3d5bb"
+  resolved "https://github.com/RiinV/epub.js#90f9958fcfe6a8372ca12a6c6ce5957d7bbddf70"
   dependencies:
     "@types/jszip" "^3.4.1"
     "@types/localforage" "0.0.34"
