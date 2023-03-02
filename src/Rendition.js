@@ -258,6 +258,10 @@ class Rendition extends Component {
     this.sendToBridge('prev');
   }
 
+  unselectAllText() {
+    this.sendToBridge('unselectAllText');
+  }
+
   destroy() {}
 
   postMessage(str) {

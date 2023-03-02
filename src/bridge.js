@@ -263,6 +263,14 @@ window.onerror = function (message, file, line, col, error) {
           }
           break;
         }
+        case 'unselectAllText': {
+          if (rendition) {
+            contents.document.getSelection().removeAllRanges();
+          } else {
+            q.push(message);
+          }
+          break;
+        }
       }
     }
 
