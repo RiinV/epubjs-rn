@@ -45,6 +45,7 @@ class Rendition extends Component {
 
     this.state = {
       loaded: false,
+      showIndicator: true,
     };
   }
 
@@ -318,7 +319,19 @@ class Rendition extends Component {
         this._onWebViewLoaded();
         break;
       }
+      case 'hide': {
+        this.setState({
+          showIndicator: true,
+        });
+        setTimeout(() => {
+          this.setState({
+            showIndicator: false,
+          });
+        }, 1000);
+        break;
+      }
       case 'rendered': {
+        this.updateLayout();
         if (!this.state.loaded) {
           this.setState({ loaded: true });
         }
@@ -474,7 +487,7 @@ class Rendition extends Component {
           onShouldStartLoadWithRequest={this.props.onShouldStartLoadWithRequest}
           {...(this.props.webviewProps || {})}
         />
-        {!this.state.loaded ? loader : null}
+        {!this.state.loaded || this.state.showIndicator || this.props.showIndicator ? loader : null}
       </View>
     );
   }

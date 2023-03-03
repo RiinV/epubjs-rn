@@ -388,6 +388,7 @@ var Epub = function (_Component) {
         minSpreadWidth: this.props.minSpreadWidth,
         stylesheet: this.props.stylesheet,
         webviewStylesheet: this.props.webviewStylesheet,
+        showIndicator: this.props.showIndicator,
         script: this.props.script,
         onSelected: this.props.onSelected,
         onMarkClicked: this.props.onMarkClicked,

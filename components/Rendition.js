@@ -122,6 +122,7 @@ var Rendition = (function (_Component) {
     _this.webviewbridgeRef = _react.default.createRef();
     _this.state = {
       loaded: false,
+      showIndicator: true,
     };
     return _this;
   }
@@ -394,6 +395,12 @@ var Rendition = (function (_Component) {
       },
     },
     {
+      key: 'unselectAllText',
+      value: function unselectAllText() {
+        this.sendToBridge('unselectAllText');
+      },
+    },
+    {
       key: 'destroy',
       value: function destroy() {},
     },
@@ -434,6 +441,8 @@ var Rendition = (function (_Component) {
     {
       key: '_onBridgeMessage',
       value: function _onBridgeMessage(e) {
+        var _this2 = this;
+
         var msg = e.nativeEvent.data;
         var decoded;
 
@@ -467,7 +476,21 @@ var Rendition = (function (_Component) {
             break;
           }
 
+          case 'hide': {
+            this.setState({
+              showIndicator: true,
+            });
+            setTimeout(function () {
+              _this2.setState({
+                showIndicator: false,
+              });
+            }, 1000);
+            break;
+          }
+
           case 'rendered': {
+            this.updateLayout();
+
             if (!this.state.loaded) {
               this.setState({
                 loaded: true,
@@ -606,19 +629,19 @@ var Rendition = (function (_Component) {
     {
       key: 'render',
       value: function render() {
-        var _this2 = this;
+        var _this3 = this;
 
         var loader = _react.default.createElement(
           _reactNative.TouchableOpacity,
           {
             onPress: function onPress() {
-              return _this2.props.onPress('');
+              return _this3.props.onPress('');
             },
             style: styles.loadScreen,
             __self: this,
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 411,
+              lineNumber: 428,
               columnNumber: 7,
             },
           },
@@ -634,7 +657,7 @@ var Rendition = (function (_Component) {
               __self: this,
               __source: {
                 fileName: _jsxFileName,
-                lineNumber: 412,
+                lineNumber: 429,
                 columnNumber: 9,
               },
             },
@@ -647,7 +670,7 @@ var Rendition = (function (_Component) {
               __self: this,
               __source: {
                 fileName: _jsxFileName,
-                lineNumber: 419,
+                lineNumber: 436,
                 columnNumber: 11,
               },
             }),
@@ -674,7 +697,7 @@ var Rendition = (function (_Component) {
             __self: this,
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 433,
+              lineNumber: 450,
               columnNumber: 7,
             },
           },
@@ -717,13 +740,13 @@ var Rendition = (function (_Component) {
                 __self: this,
                 __source: {
                   fileName: _jsxFileName,
-                  lineNumber: 444,
+                  lineNumber: 461,
                   columnNumber: 9,
                 },
               },
             ),
           ),
-          !this.state.loaded ? loader : null,
+          !this.state.loaded || this.state.showIndicator || this.props.showIndicator ? loader : null,
         );
       },
     },
