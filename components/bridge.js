@@ -56,17 +56,18 @@ window.onerror = function (message, file, line, col, error) {
     }
 
     function checkDirection() {
+      var RANGE_TO_SWIPE = 75;
       var _book$rendition$locat = book.rendition.location.start.displayed,
           page = _book$rendition$locat.page,
           total = _book$rendition$locat.total;
 
-      if (touchendX < touchstartX) {
+      if (touchendX < touchstartX - RANGE_TO_SWIPE) {
         if (isChrome || page === total) {
           rendition.next();
         }
       }
 
-      if (touchendX > touchstartX) {
+      if (touchendX > touchstartX + RANGE_TO_SWIPE) {
         if (isChrome || page === 1) {
           rendition.prev();
         }
