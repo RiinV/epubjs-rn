@@ -76,14 +76,14 @@ function closestMultiple(N, M) {
       if (touchendX < touchstartX - RANGE_TO_SWIPE) {
         if (isChrome || page === total) {
           rendition.next();
-          window.scrollTo(closestMultiple(window.scrollX, 393), 0);
+          window.scrollTo(closestMultiple(window.scrollX, window.innerWidth), 0);
         }
       }
 
       if (touchendX > touchstartX + RANGE_TO_SWIPE) {
         if (isChrome || page === 1) {
           rendition.prev();
-          window.scrollTo(closestMultiple(window.scrollX, 393), 0);
+          window.scrollTo(closestMultiple(window.scrollX, window.innerWidth), 0);
         }
       }
     }
