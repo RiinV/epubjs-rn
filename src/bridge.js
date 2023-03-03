@@ -3,6 +3,17 @@ window.onerror = function (message, file, line, col, error) {
   window.postMessage(msg, '*');
 };
 
+function closestMultiple(N, M) {
+  const quotient = Math.floor(N / M);
+  const multiple1 = M * quotient;
+  const multiple2 = M * (quotient + 1);
+
+  if (Math.abs(N - multiple1) < Math.abs(N - multiple2)) {
+    return multiple1;
+  }
+  return multiple2;
+}
+
 (function () {
   function _ready() {
     var contents;
@@ -53,12 +64,14 @@ window.onerror = function (message, file, line, col, error) {
       if (touchendX < touchstartX - RANGE_TO_SWIPE) {
         if (isChrome || page === total) {
           rendition.next();
+          window.scrollTo(closestMultiple(window.scrollX, 393), 0);
         }
       }
 
       if (touchendX > touchstartX + RANGE_TO_SWIPE) {
         if (isChrome || page === 1) {
           rendition.prev();
+          window.scrollTo(closestMultiple(window.scrollX, 393), 0);
         }
       }
     }
