@@ -341,7 +341,7 @@ window.onerror = function (message, file, line, col, error) {
         case 'unselectAllText':
           {
             if (rendition) {
-              contents.document.getSelection().removeAllRanges();
+              rendition.getContents()[0].document.getSelection().removeAllRanges();
             } else {
               q.push(message);
             }
