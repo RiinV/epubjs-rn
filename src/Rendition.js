@@ -45,7 +45,7 @@ class Rendition extends Component {
 
     this.state = {
       loaded: false,
-      showIndicator: true,
+      showIndicator: false,
     };
   }
 

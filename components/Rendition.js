@@ -122,7 +122,7 @@ var Rendition = (function (_Component) {
     _this.webviewbridgeRef = _react.default.createRef();
     _this.state = {
       loaded: false,
-      showIndicator: true,
+      showIndicator: false,
     };
     return _this;
   }
