@@ -45,6 +45,7 @@ function closestMultiple(N, M) {
     var rendition;
     var minSpreadWidth = 815;
     var axis = 'horizontal';
+    var isTextSelection = false;
     var isChrome = /Chrome/.test(navigator.userAgent);
     var isWebkit = !isChrome && /AppleWebKit/.test(navigator.userAgent);
 
@@ -74,14 +75,14 @@ function closestMultiple(N, M) {
           total = _book$rendition$locat.total;
 
       if (touchendX < touchstartX - RANGE_TO_SWIPE) {
-        if (isChrome || page === total) {
+        if (!isTextSelection && (isChrome || page === total)) {
           rendition.next();
           window.scrollTo(closestMultiple(window.scrollX, window.innerWidth), 0);
         }
       }
 
       if (touchendX > touchstartX + RANGE_TO_SWIPE) {
-        if (isChrome || page === 1) {
+        if (!isTextSelection && (isChrome || page === 1)) {
           rendition.prev();
           window.scrollTo(closestMultiple(window.scrollX, window.innerWidth), 0);
         }
@@ -477,6 +478,7 @@ function closestMultiple(N, M) {
           clearTimeout(longPressTimer);
           touchendX = e.changedTouches[0].screenX;
           checkDirection();
+          isTextSelection = false;
 
           if (preventTap) {
             preventTap = false;
@@ -553,6 +555,7 @@ function closestMultiple(N, M) {
         });
       });
       rendition.on('selected', function (cfiRange, contents) {
+        isTextSelection = true;
         var range = contents.range(cfiRange);
         var rect = range.getBoundingClientRect();
         var selectedCfiRange = cfiRange;
