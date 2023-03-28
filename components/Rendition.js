@@ -489,8 +489,6 @@ var Rendition = (function (_Component) {
           }
 
           case 'rendered': {
-            this.updateLayout();
-
             if (!this.state.loaded) {
               this.setState({
                 loaded: true,
@@ -641,7 +639,7 @@ var Rendition = (function (_Component) {
             __self: this,
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 428,
+              lineNumber: 427,
               columnNumber: 7,
             },
           },
@@ -657,7 +655,7 @@ var Rendition = (function (_Component) {
               __self: this,
               __source: {
                 fileName: _jsxFileName,
-                lineNumber: 429,
+                lineNumber: 428,
                 columnNumber: 9,
               },
             },
@@ -670,7 +668,7 @@ var Rendition = (function (_Component) {
               __self: this,
               __source: {
                 fileName: _jsxFileName,
-                lineNumber: 436,
+                lineNumber: 435,
                 columnNumber: 11,
               },
             }),
@@ -697,7 +695,7 @@ var Rendition = (function (_Component) {
             __self: this,
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 450,
+              lineNumber: 449,
               columnNumber: 7,
             },
           },
@@ -740,7 +738,7 @@ var Rendition = (function (_Component) {
                 __self: this,
                 __source: {
                   fileName: _jsxFileName,
-                  lineNumber: 461,
+                  lineNumber: 460,
                   columnNumber: 9,
                 },
               },
