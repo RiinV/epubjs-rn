@@ -21,7 +21,11 @@ const EMBEDDED_HTML = `
       margin: 0;
       -webkit-tap-highlight-color: rgba(0,0,0,0);
       -webkit-tap-highlight-color: transparent; /* For some Androids */
-    } 
+    }
+
+    * {
+      overscroll-behavior: none;
+    }
 
     /* For iPhone X Notch */
     @media only screen
