@@ -16,7 +16,7 @@
     "@babel/polyfill": "7.8.7",
     "base-64": "0.1.0",
     "buffer": "5.6.0",
-    "epubjs": "https://github.com/RiinV/epub.js#rnReader",
+    "epubjs": "https://github.com/RiinV/epub.js#90f9958fcfe6a8372ca12a6c6ce5957d7bbddf70",
     "event-emitter": "^0.3.5",
     "events": "3.1.0",
     "i": "0.3.6",

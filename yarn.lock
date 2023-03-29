@@ -3308,9 +3308,9 @@ envinfo@^7.7.2:
   resolved "https://registry.yarnpkg.com/envinfo/-/envinfo-7.8.1.tgz#06377e3e5f4d379fea7ac592d5ad8927e0c4d475"
   integrity sha512-/o+BXHmB7ocbHEAs6F2EnG0ogybVVUdkRunTT2glZU9XAaGmhqskrvKwqXuDfNjEO0LZKWdejEEpnq8aM0tOaw==
 
-"epubjs@https://github.com/RiinV/epub.js#rnReader":
+"epubjs@https://github.com/RiinV/epub.js#90f9958fcfe6a8372ca12a6c6ce5957d7bbddf70":
   version "0.3.86"
-  resolved "https://github.com/RiinV/epub.js#1f49104c9cc94d75bcc36f0327811618f7853505"
+  resolved "https://github.com/RiinV/epub.js#90f9958fcfe6a8372ca12a6c6ce5957d7bbddf70"
   dependencies:
     "@types/jszip" "^3.4.1"
     "@types/localforage" "0.0.34"
