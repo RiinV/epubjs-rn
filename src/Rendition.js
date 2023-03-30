@@ -335,6 +335,7 @@ class Rendition extends Component {
         break;
       }
       case 'rendered': {
+        this.updateLayout();
         if (!this.state.loaded) {
           this.setState({ loaded: true });
         }
