@@ -113,7 +113,7 @@ var getEmbeddedHtml = function getEmbeddedHtml(backgroundColor) {
     _utils.renditionEmbeddedScripts +
     '\n  <style>\n    body {\n      background-color: ' +
     backgroundColor +
-    ';\n      margin: 0;\n      -webkit-tap-highlight-color: rgba(0,0,0,0);\n      -webkit-tap-highlight-color: transparent; /* For some Androids */\n    } \n\n    /* For iPhone X Notch */\n    @media only screen\n      and (min-device-width : 375px)\n      and (max-device-width : 812px)\n      and (-webkit-device-pixel-ratio : 3) {\n      body {\n        padding-top: calc(env(safe-area-inset-top) / 2);\n      }\n    }\n  </style>\n</head><body></body></html>\n'
+    ';\n      margin: 0;\n      -webkit-tap-highlight-color: rgba(0,0,0,0);\n      -webkit-tap-highlight-color: transparent; /* For some Androids */\n    } \n\n    * {\n      overscroll-behavior: none;\n    }\n\n    /* For iPhone X Notch */\n    @media only screen\n      and (min-device-width : 375px)\n      and (max-device-width : 812px)\n      and (-webkit-device-pixel-ratio : 3) {\n      body {\n        padding-top: calc(env(safe-area-inset-top) / 2);\n      }\n    }\n  </style>\n</head><body></body></html>\n'
   );
 };
 
@@ -652,7 +652,7 @@ var Rendition = (function (_Component) {
             __self: this,
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 438,
+              lineNumber: 442,
               columnNumber: 7,
             },
           },
@@ -668,7 +668,7 @@ var Rendition = (function (_Component) {
               __self: this,
               __source: {
                 fileName: _jsxFileName,
-                lineNumber: 439,
+                lineNumber: 443,
                 columnNumber: 9,
               },
             },
@@ -681,7 +681,7 @@ var Rendition = (function (_Component) {
               __self: this,
               __source: {
                 fileName: _jsxFileName,
-                lineNumber: 446,
+                lineNumber: 450,
                 columnNumber: 11,
               },
             }),
@@ -708,7 +708,7 @@ var Rendition = (function (_Component) {
             __self: this,
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 460,
+              lineNumber: 464,
               columnNumber: 7,
             },
           },
@@ -751,7 +751,7 @@ var Rendition = (function (_Component) {
                 __self: this,
                 __source: {
                   fileName: _jsxFileName,
-                  lineNumber: 471,
+                  lineNumber: 475,
                   columnNumber: 9,
                 },
               },

@@ -27,6 +27,10 @@ const getEmbeddedHtml = (backgroundColor) => `
       -webkit-tap-highlight-color: transparent; /* For some Androids */
     } 
 
+    * {
+      overscroll-behavior: none;
+    }
+
     /* For iPhone X Notch */
     @media only screen
       and (min-device-width : 375px)
