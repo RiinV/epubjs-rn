@@ -1,30 +1,18 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 
-import {
-  StyleSheet,
-  Text,
-  View,
-  FlatList,
-  TouchableHighlight,
-  Modal,
-  TouchableOpacity,
-  Platform
-} from 'react-native';
+import { StyleSheet, Text, View, FlatList, TouchableHighlight, Modal, TouchableOpacity, Platform } from 'react-native';
 
-
-import Icon from 'react-native-vector-icons/EvilIcons'
-
+import Icon from 'react-native-vector-icons/EvilIcons';
 
 class Nav extends Component<> {
-
   constructor(props) {
     super(props);
 
     this.state = {
       error: '',
       dataSource: this.props.toc || [],
-      modalVisible: false
-    }
+      modalVisible: false,
+    };
   }
 
   componentDidMount() {
@@ -38,7 +26,7 @@ class Nav extends Component<> {
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.toc !== this.props.toc) {
       this.setState({
-        dataSource: this.props.toc || []
+        dataSource: this.props.toc || [],
       });
     }
 
@@ -52,11 +40,11 @@ class Nav extends Component<> {
   }
 
   show() {
-    this.setState({modalVisible: true});
+    this.setState({ modalVisible: true });
   }
 
   hide() {
-    this.setState({modalVisible: false});
+    this.setState({ modalVisible: false });
   }
 
   _closeModal() {
@@ -65,7 +53,7 @@ class Nav extends Component<> {
 
   _onPress(item) {
     // var item = this.props.toc[event.selectedIndex];
-    if(this.props.display) {
+    if (this.props.display) {
       this.props.display(item.href);
     }
     this.hide();
@@ -75,29 +63,23 @@ class Nav extends Component<> {
     return (
       <TouchableHighlight onPress={() => this._onPress(row)}>
         <View style={styles.row}>
-          <Text style={styles.title}>
-            {row.label}
-          </Text>
+          <Text style={styles.title}>{row.label}</Text>
         </View>
       </TouchableHighlight>
     );
   }
 
   render() {
-
     return (
       <View style={styles.container}>
         <Modal
-          animationType={"slide"}
+          animationType={'slide'}
           visible={this.state.modalVisible}
-          onRequestClose={() => console.log("close requested")}
-          >
-          <View
-            style={styles.header}>
+          onRequestClose={() => console.log('close requested')}>
+          <View style={styles.header}>
             <Text style={styles.headerTitle}>Table of Contents</Text>
-            <TouchableOpacity style={styles.backButton}
-              onPress={() => this.hide()}>
-              <Icon name="close" size={34} />
+            <TouchableOpacity style={styles.backButton} onPress={() => this.hide()}>
+              <Icon name='close' size={34} />
             </TouchableOpacity>
           </View>
           <FlatList
@@ -106,7 +88,7 @@ class Nav extends Component<> {
             renderItem={(row) => {
               return this.renderRow(row.item);
             }}
-            keyExtractor={item => item.id}
+            keyExtractor={(item) => item.id}
             ItemSeparatorComponent={() => <View style={styles.separator} />}
           />
         </Modal>
@@ -115,25 +97,24 @@ class Nav extends Component<> {
   }
 }
 
-
 const styles = StyleSheet.create({
   navBar: {
     backgroundColor: '#f7f7f7',
     height: 40,
     flex: 1,
     flexDirection: 'row',
-    borderBottomColor: "#b2b2b2",
-    borderBottomWidth: .5,
+    borderBottomColor: '#b2b2b2',
+    borderBottomWidth: 0.5,
   },
   toc: {
     flex: 14,
   },
   button: {
     marginTop: 8,
-    marginRight: 4
+    marginRight: 4,
   },
   buttonLabel: {
-    color: "#007AFF",
+    color: '#007AFF',
     textAlign: 'center',
     fontSize: 16,
   },
@@ -143,7 +124,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     flex: 20,
     marginRight: -40,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     // fontFamily: "georgia",
   },
   row: {
@@ -151,10 +132,10 @@ const styles = StyleSheet.create({
     // justifyContent: 'center',
     padding: 10,
     backgroundColor: '#FFFFFF',
-    overflow: "hidden",
+    overflow: 'hidden',
   },
   title: {
-    fontFamily: "georgia",
+    fontFamily: 'georgia',
   },
   separator: {
     height: 1,
@@ -175,15 +156,15 @@ const styles = StyleSheet.create({
     right: 0,
     ...Platform.select({
       ios: {
-        fontFamily: "Baskerville",
+        fontFamily: 'Baskerville',
       },
       android: {
-        fontFamily: "serif"
+        fontFamily: 'serif',
       },
     }),
   },
   header: {
-    backgroundColor: "#cdcdcd",
+    backgroundColor: '#cdcdcd',
     paddingTop: 0,
     top: 0,
     ...Platform.select({
@@ -197,7 +178,7 @@ const styles = StyleSheet.create({
     right: 0,
     left: 0,
     borderBottomWidth: 1,
-    borderBottomColor:"#000",
+    borderBottomColor: '#000',
   },
   backButton: {
     width: 130,
@@ -211,7 +192,7 @@ const styles = StyleSheet.create({
   backButtonImage: {
     width: 30,
     height: 30,
-  }
+  },
 });
 
 export default Nav;

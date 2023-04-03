@@ -27,7 +27,7 @@ var _eventEmitter = _interopRequireDefault(require('event-emitter'));
 
 var _utils = require('./utils');
 
-var _jsxFileName = '/Users/sarpaktug/Documents/SGProjects/epubjs-rn/src/Rendition.js';
+var _jsxFileName = '/Users/kaarel/Dev/RA/epub/epubjs-rn/src/Rendition.js';
 
 function _getRequireWildcardCache(nodeInterop) {
   if (typeof WeakMap !== 'function') {
@@ -103,10 +103,19 @@ function _isNativeReflectConstruct() {
   }
 }
 
-var EMBEDDED_HTML =
-  '\n<!DOCTYPE html>\n<html>\n<head>\n  <meta charset="utf-8">\n  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no, viewport-fit=cover">\n  <title>epubjs</title>\n  ' +
-  _utils.renditionEmbeddedScripts +
-  '\n  <style>\n    body {\n      margin: 0;\n      -webkit-tap-highlight-color: rgba(0,0,0,0);\n      -webkit-tap-highlight-color: transparent; /* For some Androids */\n    } \n\n    /* For iPhone X Notch */\n    @media only screen\n      and (min-device-width : 375px)\n      and (max-device-width : 812px)\n      and (-webkit-device-pixel-ratio : 3) {\n      body {\n        padding-top: calc(env(safe-area-inset-top) / 2);\n      }\n    }\n  </style>\n</head><body></body></html>\n';
+var setPlatform = '<script>window.platform = "' + _reactNative.Platform.OS + '"</script>';
+
+var getEmbeddedHtml = function getEmbeddedHtml(backgroundColor) {
+  return (
+    '\n<!DOCTYPE html>\n<html>\n<head>\n  <meta charset="utf-8">\n  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no, viewport-fit=cover">\n  <title>epubjs</title>\n  ' +
+    setPlatform +
+    '\n  ' +
+    _utils.renditionEmbeddedScripts +
+    '\n  <style>\n    body {\n      background-color: ' +
+    backgroundColor +
+    ';\n      margin: 0;\n      -webkit-tap-highlight-color: rgba(0,0,0,0);\n      -webkit-tap-highlight-color: transparent; /* For some Androids */\n    } \n\n    /* For iPhone X Notch */\n    @media only screen\n      and (min-device-width : 375px)\n      and (max-device-width : 812px)\n      and (-webkit-device-pixel-ratio : 3) {\n      body {\n        padding-top: calc(env(safe-area-inset-top) / 2);\n      }\n    }\n  </style>\n</head><body></body></html>\n'
+  );
+};
 
 var Rendition = (function (_Component) {
   (0, _inherits2.default)(Rendition, _Component);
@@ -447,7 +456,11 @@ var Rendition = (function (_Component) {
         var decoded;
 
         if (typeof msg === 'string') {
-          decoded = JSON.parse(msg);
+          try {
+            decoded = JSON.parse(msg);
+          } catch (err) {
+            decoded = msg;
+          }
         } else {
           decoded = msg;
         }
@@ -489,8 +502,6 @@ var Rendition = (function (_Component) {
           }
 
           case 'rendered': {
-            this.updateLayout();
-
             if (!this.state.loaded) {
               this.setState({
                 loaded: true,
@@ -641,7 +652,7 @@ var Rendition = (function (_Component) {
             __self: this,
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 428,
+              lineNumber: 438,
               columnNumber: 7,
             },
           },
@@ -657,7 +668,7 @@ var Rendition = (function (_Component) {
               __self: this,
               __source: {
                 fileName: _jsxFileName,
-                lineNumber: 429,
+                lineNumber: 439,
                 columnNumber: 9,
               },
             },
@@ -670,7 +681,7 @@ var Rendition = (function (_Component) {
               __self: this,
               __source: {
                 fileName: _jsxFileName,
-                lineNumber: 436,
+                lineNumber: 446,
                 columnNumber: 11,
               },
             }),
@@ -697,7 +708,7 @@ var Rendition = (function (_Component) {
             __self: this,
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 450,
+              lineNumber: 460,
               columnNumber: 7,
             },
           },
@@ -709,7 +720,7 @@ var Rendition = (function (_Component) {
                 showsVerticalScrollIndicator: this.props.showsVerticalScrollIndicator,
                 ref: this.webviewbridgeRef,
                 source: {
-                  html: EMBEDDED_HTML,
+                  html: getEmbeddedHtml(this.props.backgroundColor),
                   baseUrl: this.props.url,
                 },
                 style: [
@@ -740,7 +751,7 @@ var Rendition = (function (_Component) {
                 __self: this,
                 __source: {
                   fileName: _jsxFileName,
-                  lineNumber: 461,
+                  lineNumber: 471,
                   columnNumber: 9,
                 },
               },

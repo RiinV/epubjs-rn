@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { StyleSheet, View, ActivityIndicator, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, ActivityIndicator, TouchableOpacity, Platform } from 'react-native';
 
 import { WebView } from 'react-native-webview';
 
@@ -8,16 +8,20 @@ import EventEmitter from 'event-emitter';
 
 import { renditionEmbeddedScripts } from './utils';
 
-const EMBEDDED_HTML = `
+const setPlatform = `<script>window.platform = "${Platform.OS}"</script>`;
+
+const getEmbeddedHtml = (backgroundColor) => `
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no, viewport-fit=cover">
   <title>epubjs</title>
+  ${setPlatform}
   ${renditionEmbeddedScripts}
   <style>
     body {
+      background-color: ${backgroundColor};
       margin: 0;
       -webkit-tap-highlight-color: rgba(0,0,0,0);
       -webkit-tap-highlight-color: transparent; /* For some Androids */
@@ -111,7 +115,7 @@ class Rendition extends Component {
 
     // console.log("loading book: ", bookUrl);
 
-    let config = {
+    const config = {
       minSpreadWidth: this.props.minSpreadWidth || 815,
       flow: this.props.flow || 'paginated',
       gap: this.props.gap,
@@ -164,7 +168,7 @@ class Rendition extends Component {
   }
 
   display(target) {
-    let spine = typeof target === 'number' && target;
+    const spine = typeof target === 'number' && target;
 
     if (!this._webviewLoaded) {
       return;
@@ -296,7 +300,11 @@ class Rendition extends Component {
     var msg = e.nativeEvent.data;
     var decoded;
     if (typeof msg === 'string') {
-      decoded = JSON.parse(msg);
+      try {
+        decoded = JSON.parse(msg);
+      } catch (err) {
+        decoded = msg;
+      }
     } else {
       decoded = msg; // webkit may pass parsed objects
     }
@@ -331,14 +339,16 @@ class Rendition extends Component {
         break;
       }
       case 'rendered': {
-        this.updateLayout();
+        // if (Platform.OS === 'ios') {
+        //   this.updateLayout();
+        // }
         if (!this.state.loaded) {
           this.setState({ loaded: true });
         }
         break;
       }
       case 'relocated': {
-        let { location } = decoded;
+        const { location } = decoded;
         this._relocated(location);
         if (!this.state.loaded) {
           this.setState({ loaded: true });
@@ -346,7 +356,7 @@ class Rendition extends Component {
         break;
       }
       case 'resized': {
-        let { size } = decoded;
+        const { size } = decoded;
         // console.log("resized", size.width, size.height);
         break;
       }
@@ -368,17 +378,17 @@ class Rendition extends Component {
         break;
       }
       case 'markClicked': {
-        let { cfiRange, selectedRect } = decoded;
+        const { cfiRange, selectedRect } = decoded;
         this._markClicked(cfiRange, selectedRect);
         break;
       }
       case 'added': {
-        let { sectionIndex } = decoded;
+        const { sectionIndex } = decoded;
         this.props.onViewAdded && this.props.onViewAdded(sectionIndex);
         break;
       }
       case 'removed': {
-        let { sectionIndex } = decoded;
+        const { sectionIndex } = decoded;
         this.props.beforeViewRemoved && this.props.beforeViewRemoved(sectionIndex);
         break;
       }
@@ -424,7 +434,7 @@ class Rendition extends Component {
   }
 
   render() {
-    let loader = (
+    const loader = (
       <TouchableOpacity onPress={() => this.props.onPress('')} style={styles.loadScreen}>
         <View
           style={[
@@ -462,7 +472,7 @@ class Rendition extends Component {
           showsHorizontalScrollIndicator={this.props.showsHorizontalScrollIndicator}
           showsVerticalScrollIndicator={this.props.showsVerticalScrollIndicator}
           ref={this.webviewbridgeRef}
-          source={{ html: EMBEDDED_HTML, baseUrl: this.props.url }}
+          source={{ html: getEmbeddedHtml(this.props.backgroundColor), baseUrl: this.props.url }}
           style={[
             styles.manager,
             {

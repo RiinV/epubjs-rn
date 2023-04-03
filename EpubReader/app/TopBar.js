@@ -9,10 +9,10 @@ import {
   TouchableWithoutFeedback,
   View,
   Animated,
-  StatusBar
+  StatusBar,
 } from 'react-native';
 
-import Icon from 'react-native-vector-icons/EvilIcons'
+import Icon from 'react-native-vector-icons/EvilIcons';
 
 const styles = StyleSheet.create({
   title: {
@@ -23,15 +23,15 @@ const styles = StyleSheet.create({
     color: '#000',
     ...Platform.select({
       ios: {
-        fontFamily: "Baskerville",
+        fontFamily: 'Baskerville',
       },
       android: {
-        fontFamily: "serif"
+        fontFamily: 'serif',
       },
     }),
   },
   header: {
-    backgroundColor: "#cdcdcd",
+    backgroundColor: '#cdcdcd',
     ...Platform.select({
       ios: {
         paddingTop: 40,
@@ -52,13 +52,13 @@ const styles = StyleSheet.create({
     right: 0,
     left: 0,
     borderBottomWidth: 1,
-    borderBottomColor:"#000",
+    borderBottomColor: '#000',
     position: 'absolute',
     display: 'flex',
-    alignItems:'center',
-    justifyContent:'center',
+    alignItems: 'center',
+    justifyContent: 'center',
     flexDirection: 'row',
-    flex: 14
+    flex: 14,
   },
   backButton: {
     width: 34,
@@ -66,16 +66,15 @@ const styles = StyleSheet.create({
     margin: 20,
     flex: 1,
     display: 'flex',
-    alignItems:'center',
-    justifyContent:'center',
-    flexDirection: 'row'
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
   },
   backButtonImage: {
     width: 30,
     height: 30,
-  }
+  },
 });
-
 
 class TopBar extends Component {
   constructor(props) {
@@ -83,7 +82,6 @@ class TopBar extends Component {
     this.state = {
       fadeAnim: new Animated.Value(1),
     };
-
 
     this.barsShown = true;
   }
@@ -111,9 +109,9 @@ class TopBar extends Component {
   show() {
     const timing = Animated.timing;
 
-    timing( this.state.fadeAnim, {
+    timing(this.state.fadeAnim, {
       toValue: 1,
-      duration: 20
+      duration: 20,
     }).start();
 
     this.barsShown = true;
@@ -122,11 +120,10 @@ class TopBar extends Component {
   hide() {
     const timing = Animated.timing;
 
-    timing( this.state.fadeAnim, {
+    timing(this.state.fadeAnim, {
       toValue: 0,
-      duration: 20
+      duration: 20,
     }).start();
-
 
     this.barsShown = false;
   }
@@ -134,14 +131,12 @@ class TopBar extends Component {
   render() {
     return (
       <Animated.View style={[styles.header, { opacity: this.state.fadeAnim }]}>
-        <TouchableOpacity style={styles.backButton}
-          onPress={this.props.onLeftButtonPressed}>
-          <Icon name="navicon" size={34} />
+        <TouchableOpacity style={styles.backButton} onPress={this.props.onLeftButtonPressed}>
+          <Icon name='navicon' size={34} />
         </TouchableOpacity>
         <Text style={styles.title}>{this.props.title}</Text>
-        <TouchableOpacity style={styles.backButton}
-          onPress={this.props.onRightButtonPressed}>
-          <Icon name="gear" size={34} />
+        <TouchableOpacity style={styles.backButton} onPress={this.props.onRightButtonPressed}>
+          <Icon name='gear' size={34} />
         </TouchableOpacity>
       </Animated.View>
     );
