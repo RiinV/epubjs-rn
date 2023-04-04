@@ -35,7 +35,7 @@
     "react": "*",
     "react-native": "*",
     "react-native-static-server": "0.5.0",
-    "react-native-webview": "11.17.1",
+    "react-native-webview": "11.26.1",
     "react-native-zip-archive": "5.0.2",
     "rn-fetch-blob": "0.12.0"
   },
