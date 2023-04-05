@@ -483,7 +483,10 @@ class Rendition extends Component {
           showsHorizontalScrollIndicator={this.props.showsHorizontalScrollIndicator}
           showsVerticalScrollIndicator={this.props.showsVerticalScrollIndicator}
           ref={this.webviewbridgeRef}
-          source={{ html: getEmbeddedHtml(this.props.backgroundColor), baseUrl: this.props.url }}
+          source={{
+            html: getEmbeddedHtml(this.props.backgroundColor),
+            baseUrl: this.props.url,
+          }}
           style={[
             styles.manager,
             {

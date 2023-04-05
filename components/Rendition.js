@@ -466,7 +466,6 @@ var Rendition = (function (_Component) {
         }
 
         var p;
-        console.warn('got message from bridge', decoded);
 
         switch (decoded.method) {
           case 'log': {
@@ -667,7 +666,7 @@ var Rendition = (function (_Component) {
             __self: this,
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 451,
+              lineNumber: 449,
               columnNumber: 7,
             },
           },
@@ -683,7 +682,7 @@ var Rendition = (function (_Component) {
               __self: this,
               __source: {
                 fileName: _jsxFileName,
-                lineNumber: 452,
+                lineNumber: 450,
                 columnNumber: 9,
               },
             },
@@ -696,7 +695,7 @@ var Rendition = (function (_Component) {
               __self: this,
               __source: {
                 fileName: _jsxFileName,
-                lineNumber: 459,
+                lineNumber: 457,
                 columnNumber: 11,
               },
             }),
@@ -723,7 +722,7 @@ var Rendition = (function (_Component) {
             __self: this,
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 473,
+              lineNumber: 471,
               columnNumber: 7,
             },
           },
@@ -766,7 +765,7 @@ var Rendition = (function (_Component) {
                 __self: this,
                 __source: {
                   fileName: _jsxFileName,
-                  lineNumber: 484,
+                  lineNumber: 482,
                   columnNumber: 9,
                 },
               },
