@@ -474,6 +474,20 @@ var Rendition = (function (_Component) {
             break;
           }
 
+          case 'font': {
+            var _decoded;
+
+            var showIndicator = (_decoded = decoded) == null ? void 0 : _decoded.value;
+
+            if (showIndicator !== this.state.showIndicator) {
+              this.setState({
+                showIndicator: showIndicator,
+              });
+            }
+
+            break;
+          }
+
           case 'error': {
             if (this.props.onError) {
               this.props.onError(decoded.value);
@@ -513,8 +527,8 @@ var Rendition = (function (_Component) {
           }
 
           case 'relocated': {
-            var _decoded = decoded,
-              location = _decoded.location;
+            var _decoded2 = decoded,
+              location = _decoded2.location;
 
             this._relocated(location);
 
@@ -528,8 +542,8 @@ var Rendition = (function (_Component) {
           }
 
           case 'resized': {
-            var _decoded2 = decoded,
-              size = _decoded2.size;
+            var _decoded3 = decoded,
+              size = _decoded3.size;
             break;
           }
 
@@ -549,10 +563,10 @@ var Rendition = (function (_Component) {
           }
 
           case 'selected': {
-            var _decoded3 = decoded,
-              cfiRange = _decoded3.cfiRange,
-              selectedRect = _decoded3.selectedRect,
-              selectedText = _decoded3.selectedText;
+            var _decoded4 = decoded,
+              cfiRange = _decoded4.cfiRange,
+              selectedRect = _decoded4.selectedRect,
+              selectedText = _decoded4.selectedText;
 
             this._selected(cfiRange, selectedRect, selectedText);
 
@@ -560,9 +574,9 @@ var Rendition = (function (_Component) {
           }
 
           case 'markClicked': {
-            var _decoded4 = decoded,
-              _cfiRange = _decoded4.cfiRange,
-              _selectedRect = _decoded4.selectedRect;
+            var _decoded5 = decoded,
+              _cfiRange = _decoded5.cfiRange,
+              _selectedRect = _decoded5.selectedRect;
 
             this._markClicked(_cfiRange, _selectedRect);
 
@@ -570,15 +584,15 @@ var Rendition = (function (_Component) {
           }
 
           case 'added': {
-            var _decoded5 = decoded,
-              sectionIndex = _decoded5.sectionIndex;
+            var _decoded6 = decoded,
+              sectionIndex = _decoded6.sectionIndex;
             this.props.onViewAdded && this.props.onViewAdded(sectionIndex);
             break;
           }
 
           case 'removed': {
-            var _decoded6 = decoded,
-              _sectionIndex = _decoded6.sectionIndex;
+            var _decoded7 = decoded,
+              _sectionIndex = _decoded7.sectionIndex;
             this.props.beforeViewRemoved && this.props.beforeViewRemoved(_sectionIndex);
             break;
           }
@@ -653,7 +667,7 @@ var Rendition = (function (_Component) {
             __self: this,
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 444,
+              lineNumber: 451,
               columnNumber: 7,
             },
           },
@@ -669,7 +683,7 @@ var Rendition = (function (_Component) {
               __self: this,
               __source: {
                 fileName: _jsxFileName,
-                lineNumber: 445,
+                lineNumber: 452,
                 columnNumber: 9,
               },
             },
@@ -682,7 +696,7 @@ var Rendition = (function (_Component) {
               __self: this,
               __source: {
                 fileName: _jsxFileName,
-                lineNumber: 452,
+                lineNumber: 459,
                 columnNumber: 11,
               },
             }),
@@ -709,7 +723,7 @@ var Rendition = (function (_Component) {
             __self: this,
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 466,
+              lineNumber: 473,
               columnNumber: 7,
             },
           },
@@ -752,7 +766,7 @@ var Rendition = (function (_Component) {
                 __self: this,
                 __source: {
                   fileName: _jsxFileName,
-                  lineNumber: 477,
+                  lineNumber: 484,
                   columnNumber: 9,
                 },
               },

@@ -319,6 +319,13 @@ class Rendition extends Component {
         console.log.apply(console.log, [decoded.value]);
         break;
       }
+      case 'font': {
+        const showIndicator = decoded?.value;
+        if (showIndicator !== this.state.showIndicator) {
+          this.setState({ showIndicator });
+        }
+        break;
+      }
       case 'error': {
         if (this.props.onError) {
           this.props.onError(decoded.value);
