@@ -27,7 +27,7 @@ var EpubStreamer = (function () {
   function EpubStreamer(opts) {
     (0, _classCallCheck2.default)(this, EpubStreamer);
     opts = opts || {};
-    this.port = opts.port || '3222';
+    this.port = opts.port || '3' + Math.round(Math.random() * 1000);
     this.root = opts.root || 'www';
     this.serverOrigin = 'file://';
     this.urls = [];

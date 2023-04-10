@@ -15,7 +15,7 @@ const Uri = require('epubjs/lib/utils/url');
 class EpubStreamer {
   constructor(opts) {
     opts = opts || {};
-    this.port = opts.port || '3222'; // + Math.round(Math.random() * 1000);
+    this.port = opts.port || '3' + Math.round(Math.random() * 1000);
     this.root = opts.root || 'www';
 
     this.serverOrigin = 'file://';

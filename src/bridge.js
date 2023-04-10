@@ -317,8 +317,13 @@ function closestMultiple(N, M) {
         var preventTap = false;
         var doubleTap = false;
 
-        // Add custom css in local Http server root to include font-face files
-        contents.addStylesheet('http://localhost:3222/custom.css');
+        const urlRightSide = url ? url.split('localhost:')[1] : '';
+        const urlPort = urlRightSide ? urlRightSide.split('/')[0] : '';
+
+        if (urlPort) {
+          // Add custom css in local Http server root to include font-face files
+          contents.addStylesheet(`http://localhost:${urlPort}/custom.css`);
+        }
 
         function touchStartHandler(e) {
           var f, target;
