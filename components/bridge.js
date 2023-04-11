@@ -1,11 +1,11 @@
-var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+var _interopRequireDefault = require('@babel/runtime/helpers/interopRequireDefault');
 
-var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/extends"));
+var _extends2 = _interopRequireDefault(require('@babel/runtime/helpers/extends'));
 
 window.onerror = function (message, file, line, col, error) {
   var msg = JSON.stringify({
     method: 'error',
-    value: message
+    value: message,
   });
   window.postMessage(msg, '*');
 };
@@ -52,14 +52,14 @@ function closestMultiple(N, M) {
     console.log = function () {
       sendMessage({
         method: 'log',
-        value: Array.from(arguments)
+        value: Array.from(arguments),
       });
     };
 
     console.error = function () {
       sendMessage({
         method: 'error',
-        value: Array.from(arguments)
+        value: Array.from(arguments),
       });
     };
 
@@ -71,8 +71,8 @@ function closestMultiple(N, M) {
     function checkDirection() {
       var RANGE_TO_SWIPE = 75;
       var _book$rendition$locat = book.rendition.location.start.displayed,
-          page = _book$rendition$locat.page,
-          total = _book$rendition$locat.total;
+        page = _book$rendition$locat.page,
+        total = _book$rendition$locat.total;
 
       if (touchendX < touchstartX - RANGE_TO_SWIPE) {
         if (!isTextSelection && (isChrome || page === total)) {
@@ -90,301 +90,283 @@ function closestMultiple(N, M) {
     }
 
     function handleMessage(message) {
-      var decoded = typeof message == 'object' ? message : JSON.parse(message);
+      var decoded = typeof message === 'object' ? message : JSON.parse(message);
       var response;
       var result;
 
       switch (decoded.method) {
-        case 'open':
-          {
-            var url = decoded.args[0];
-            var options = decoded.args.length > 1 && decoded.args[1];
-            var epubOptions = decoded.args.length > 2 && decoded.args[2];
-            openEpub(url, epubOptions, options);
+        case 'open': {
+          var url = decoded.args[0];
+          var options = decoded.args.length > 1 && decoded.args[1];
+          var epubOptions = decoded.args.length > 2 && decoded.args[2];
+          openEpub(url, epubOptions, options);
 
-            if (options && options.webviewStylesheet) {
-              var head = document.getElementsByTagName('head')[0];
-              var link = document.createElement('link');
-              link.rel = 'stylesheet';
-              link.type = 'text/css';
-              link.href = options.webviewStylesheet;
-              head.appendChild(link);
-            }
-
-            break;
+          if (options && options.webviewStylesheet) {
+            var head = document.getElementsByTagName('head')[0];
+            var link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.type = 'text/css';
+            link.href = options.webviewStylesheet;
+            head.appendChild(link);
           }
 
-        case 'display':
-          {
-            var args = decoded.args && decoded.args.length && decoded.args[0];
-            var target;
+          break;
+        }
 
-            if (!args) {
-              target = undefined;
-            } else if (args.target) {
-              target = args.target.toString();
-            } else if (args.spine) {
-              target = parseInt(args.spine);
-            }
+        case 'display': {
+          var args = decoded.args && decoded.args.length && decoded.args[0];
+          var target;
 
-            if (rendition) {
-              rendition.display(target);
-            } else {
-              q.push(message);
-            }
-
-            break;
+          if (!args) {
+            target = undefined;
+          } else if (args.target) {
+            target = args.target.toString();
+          } else if (args.spine) {
+            target = parseInt(args.spine);
           }
 
-        case 'flow':
-          {
-            var direction = decoded.args.length && decoded.args[0];
-            axis = direction === 'paginated' ? 'horizontal' : 'vertical';
-
-            if (rendition) {
-              rendition.flow(direction);
-            } else {
-              q.push(message);
-            }
-
-            break;
+          if (rendition) {
+            rendition.display(target);
+          } else {
+            q.push(message);
           }
 
-        case 'resize':
-          {
-            var width = decoded.args.length && decoded.args[0];
-            var height = decoded.args.length > 1 && decoded.args[1];
+          break;
+        }
 
-            if (rendition) {
-              rendition.resize(width, height);
-            } else {
-              q.push(message);
-            }
+        case 'flow': {
+          var direction = decoded.args.length && decoded.args[0];
+          axis = direction === 'paginated' ? 'horizontal' : 'vertical';
 
-            break;
+          if (rendition) {
+            rendition.flow(direction);
+          } else {
+            q.push(message);
           }
 
-        case 'updateLayout':
-          {
-            if (rendition) {
-              rendition.manager.updateLayout();
-            }
+          break;
+        }
 
-            break;
+        case 'resize': {
+          var width = decoded.args.length && decoded.args[0];
+          var height = decoded.args.length > 1 && decoded.args[1];
+
+          if (rendition) {
+            rendition.resize(width, height);
+          } else {
+            q.push(message);
           }
 
-        case 'setLocations':
-          {
-            var locations = decoded.args[0];
+          break;
+        }
 
-            if (book) {
-              book.locations.load(locations);
-            } else {
-              q.push(message);
-            }
-
-            if (rendition) {
-              rendition.reportLocation();
-            }
-
-            break;
+        case 'updateLayout': {
+          if (rendition) {
+            rendition.manager.updateLayout();
           }
 
-        case 'reportLocation':
-          {
-            if (rendition) {
-              rendition.reportLocation();
-            } else {
-              q.push(message);
+          break;
+        }
+
+        case 'setLocations': {
+          var locations = decoded.args[0];
+
+          if (book) {
+            book.locations.load(locations);
+          } else {
+            q.push(message);
+          }
+
+          if (rendition) {
+            rendition.reportLocation();
+          }
+
+          break;
+        }
+
+        case 'reportLocation': {
+          if (rendition) {
+            rendition.reportLocation();
+          } else {
+            q.push(message);
+          }
+
+          break;
+        }
+
+        case 'minSpreadWidth': {
+          minSpreadWidth = decoded.args;
+          break;
+        }
+
+        case 'mark': {
+          if (rendition) {
+            rendition.annotations.mark.apply(rendition.annotations, decoded.args);
+          } else {
+            q.push(message);
+          }
+
+          break;
+        }
+
+        case 'underline': {
+          if (rendition) {
+            rendition.annotations.underline.apply(rendition.annotations, decoded.args);
+          } else {
+            q.push(message);
+          }
+
+          break;
+        }
+
+        case 'highlight': {
+          if (rendition) {
+            rendition.annotations.highlight.apply(rendition.annotations, decoded.args);
+          } else {
+            q.push(message);
+          }
+
+          break;
+        }
+
+        case 'removeAnnotation': {
+          if (rendition) {
+            rendition.annotations.remove.apply(rendition.annotations, decoded.args);
+          } else {
+            q.push(message);
+          }
+
+          break;
+        }
+
+        case 'themes': {
+          var themes = decoded.args[0];
+
+          if (rendition) {
+            rendition.themes.register(themes);
+          } else {
+            q.push(message);
+          }
+
+          break;
+        }
+
+        case 'theme': {
+          var theme = decoded.args[0];
+
+          if (rendition) {
+            rendition.themes.select(theme);
+          } else {
+            q.push(message);
+          }
+
+          break;
+        }
+
+        case 'fontSize': {
+          var fontSize = decoded.args[0];
+
+          if (rendition) {
+            rendition.themes.fontSize(fontSize);
+          } else {
+            q.push(message);
+          }
+
+          break;
+        }
+
+        case 'font': {
+          var font = decoded.args[0];
+
+          if (rendition) {
+            rendition.themes.font(font);
+          } else {
+            q.push(message);
+          }
+
+          break;
+        }
+
+        case 'override': {
+          if (rendition) {
+            rendition.themes.override.apply(rendition.themes, decoded.args);
+          } else {
+            q.push(message);
+          }
+
+          break;
+        }
+
+        case 'gap': {
+          var gap = decoded.args[0];
+
+          if (rendition) {
+            rendition.settings.gap = gap;
+
+            if (rendition.manager) {
+              rendition.manager.settings.gap = gap;
             }
-
-            break;
+          } else {
+            q.push(message);
           }
 
-        case 'minSpreadWidth':
-          {
-            minSpreadWidth = decoded.args;
-            break;
+          break;
+        }
+
+        case 'next': {
+          if (rendition) {
+            rendition.next();
+          } else {
+            q.push(message);
           }
 
-        case 'mark':
-          {
-            if (rendition) {
-              rendition.annotations.mark.apply(rendition.annotations, decoded.args);
-            } else {
-              q.push(message);
-            }
+          break;
+        }
 
-            break;
+        case 'prev': {
+          if (rendition) {
+            rendition.prev();
+          } else {
+            q.push(message);
           }
 
-        case 'underline':
-          {
-            if (rendition) {
-              rendition.annotations.underline.apply(rendition.annotations, decoded.args);
-            } else {
-              q.push(message);
-            }
+          break;
+        }
 
-            break;
+        case 'unselectAllText': {
+          if (rendition) {
+            rendition.getContents()[0].document.getSelection().removeAllRanges();
+          } else {
+            q.push(message);
           }
 
-        case 'highlight':
-          {
-            if (rendition) {
-              rendition.annotations.highlight.apply(rendition.annotations, decoded.args);
-            } else {
-              q.push(message);
-            }
-
-            break;
-          }
-
-        case 'removeAnnotation':
-          {
-            if (rendition) {
-              rendition.annotations.remove.apply(rendition.annotations, decoded.args);
-            } else {
-              q.push(message);
-            }
-
-            break;
-          }
-
-        case 'themes':
-          {
-            var themes = decoded.args[0];
-
-            if (rendition) {
-              rendition.themes.register(themes);
-            } else {
-              q.push(message);
-            }
-
-            break;
-          }
-
-        case 'theme':
-          {
-            var theme = decoded.args[0];
-
-            if (rendition) {
-              rendition.themes.select(theme);
-            } else {
-              q.push(message);
-            }
-
-            break;
-          }
-
-        case 'fontSize':
-          {
-            var fontSize = decoded.args[0];
-
-            if (rendition) {
-              rendition.themes.fontSize(fontSize);
-            } else {
-              q.push(message);
-            }
-
-            break;
-          }
-
-        case 'font':
-          {
-            var font = decoded.args[0];
-
-            if (rendition) {
-              rendition.themes.font(font);
-            } else {
-              q.push(message);
-            }
-
-            break;
-          }
-
-        case 'override':
-          {
-            if (rendition) {
-              rendition.themes.override.apply(rendition.themes, decoded.args);
-            } else {
-              q.push(message);
-            }
-
-            break;
-          }
-
-        case 'gap':
-          {
-            var gap = decoded.args[0];
-
-            if (rendition) {
-              rendition.settings.gap = gap;
-
-              if (rendition.manager) {
-                rendition.manager.settings.gap = gap;
-              }
-            } else {
-              q.push(message);
-            }
-
-            break;
-          }
-
-        case 'next':
-          {
-            if (rendition) {
-              rendition.next();
-            } else {
-              q.push(message);
-            }
-
-            break;
-          }
-
-        case 'prev':
-          {
-            if (rendition) {
-              rendition.prev();
-            } else {
-              q.push(message);
-            }
-
-            break;
-          }
-
-        case 'unselectAllText':
-          {
-            if (rendition) {
-              rendition.getContents()[0].document.getSelection().removeAllRanges();
-            } else {
-              q.push(message);
-            }
-
-            break;
-          }
+          break;
+        }
       }
     }
 
     function openEpub(url, epubOptions, renderOptions) {
-      var settings = (0, _extends2.default)({
-        manager: 'default',
-        overflow: 'visible',
-        method: 'blobUrl',
-        fullsize: true,
-        snap: isChrome
-      }, renderOptions);
+      var settings = (0, _extends2.default)(
+        {
+          manager: 'default',
+          overflow: 'visible',
+          method: 'blobUrl',
+          fullsize: true,
+          snap: isChrome,
+        },
+        renderOptions,
+      );
       window.book = book = ePub(url, epubOptions);
       window.rendition = rendition = book.renderTo(document.body, settings);
       rendition.hooks.content.register(function (contents, rendition) {
         var doc = contents.document;
         var startPosition = {
           x: -1,
-          y: -1
+          y: -1,
         };
         var currentPosition = {
           x: -1,
-          y: -1
+          y: -1,
         };
         var isLongPress = false;
         var longPressTimer;
@@ -393,7 +375,12 @@ function closestMultiple(N, M) {
         var lastTap = undefined;
         var preventTap = false;
         var doubleTap = false;
-        contents.addStylesheet('http://localhost:3222/custom.css');
+        var urlRightSide = url ? url.split('localhost:')[1] : '';
+        var urlPort = urlRightSide ? urlRightSide.split('/')[0] : '';
+
+        if (urlPort) {
+          contents.addStylesheet('http://localhost:' + urlPort + '/custom.css');
+        }
 
         function touchStartHandler(e) {
           var f, target;
@@ -420,7 +407,7 @@ function closestMultiple(N, M) {
                 sendMessage({
                   method: 'longpress',
                   position: currentPosition,
-                  cfi: cfi
+                  cfi: cfi,
                 });
                 isLongPress = false;
                 preventTap = true;
@@ -444,7 +431,7 @@ function closestMultiple(N, M) {
               method: 'dblpress',
               position: currentPosition,
               cfi: cfi,
-              imgSrc: imgSrc
+              imgSrc: imgSrc,
             });
           } else {
             lastTap = now;
@@ -461,7 +448,7 @@ function closestMultiple(N, M) {
             sendMessage({
               method: 'longpress',
               position: currentPosition,
-              cfi: cfi
+              cfi: cfi,
             });
             preventTap = true;
           }, touchduration);
@@ -488,7 +475,11 @@ function closestMultiple(N, M) {
           if (Math.abs(startPosition.x - currentPosition.x) < 2 && Math.abs(startPosition.y - currentPosition.y) < 2) {
             var target = e.changedTouches[0].target;
 
-            if (target.getAttribute('ref') === 'epubjs-mk' || target.getAttribute('ref') === 'epubjs-hl' || target.getAttribute('ref') === 'epubjs-ul') {
+            if (
+              target.getAttribute('ref') === 'epubjs-mk' ||
+              target.getAttribute('ref') === 'epubjs-hl' ||
+              target.getAttribute('ref') === 'epubjs-ul'
+            ) {
               return;
             }
 
@@ -498,7 +489,7 @@ function closestMultiple(N, M) {
               sendMessage({
                 method: 'longpress',
                 position: currentPosition,
-                cfi: cfi
+                cfi: cfi,
               });
               isLongPress = false;
             } else {
@@ -513,7 +504,7 @@ function closestMultiple(N, M) {
                 sendMessage({
                   method: 'press',
                   position: currentPosition,
-                  cfi: cfi
+                  cfi: cfi,
                 });
               }, touchduration);
             }
@@ -535,7 +526,7 @@ function closestMultiple(N, M) {
             sendMessage({
               method: 'longpress',
               position: currentPosition,
-              cfi: cfi
+              cfi: cfi,
             });
             isLongPress = false;
             preventTap = true;
@@ -547,11 +538,11 @@ function closestMultiple(N, M) {
         doc.addEventListener('touchmove', touchMoveHandler, false);
         doc.addEventListener('touchend', touchEndHandler, false);
         doc.addEventListener('touchforcechange', touchForceHandler, false);
-      }.bind(this));
+      });
       rendition.on('relocated', function (location) {
         sendMessage({
           method: 'relocated',
-          location: location
+          location: location,
         });
       });
       rendition.on('selected', function (cfiRange, contents) {
@@ -564,7 +555,7 @@ function closestMultiple(N, M) {
           method: 'selected',
           cfiRange: cfiRange,
           selectedRect: rect,
-          selectedText: selectedText
+          selectedText: selectedText,
         });
       });
       rendition.on('markClicked', function (cfiRange, data, contents) {
@@ -573,13 +564,13 @@ function closestMultiple(N, M) {
         sendMessage({
           method: 'markClicked',
           cfiRange: cfiRange,
-          selectedRect: rect
+          selectedRect: rect,
         });
       });
       rendition.on('rendered', function (section) {
         sendMessage({
           method: 'rendered',
-          sectionIndex: section.index
+          sectionIndex: section.index,
         });
       });
       rendition.on('rendered', function (section) {
@@ -588,19 +579,19 @@ function closestMultiple(N, M) {
       rendition.on('added', function (section) {
         sendMessage({
           method: 'added',
-          sectionIndex: section.index
+          sectionIndex: section.index,
         });
       });
       rendition.on('removed', function (section) {
         sendMessage({
           method: 'removed',
-          sectionIndex: section.index
+          sectionIndex: section.index,
         });
       });
       rendition.on('resized', function (size) {
         sendMessage({
           method: 'resized',
-          size: size
+          size: size,
         });
       });
       rendition.started.then(function () {
@@ -614,7 +605,7 @@ function closestMultiple(N, M) {
       book.ready.then(function () {
         _isReady = true;
         sendMessage({
-          method: 'ready'
+          method: 'ready',
         });
       });
       window.addEventListener('unload', function () {
@@ -626,7 +617,7 @@ function closestMultiple(N, M) {
     document.addEventListener('message', onMessage);
     sendMessage({
       method: 'loaded',
-      value: true
+      value: true,
     });
   }
 
@@ -663,6 +654,6 @@ if (typeof Object.assign !== 'function') {
       return to;
     },
     writable: true,
-    configurable: true
+    configurable: true,
   });
 }

@@ -8,16 +8,16 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
-  Animated
+  Animated,
 } from 'react-native';
 
-import Icon from 'react-native-vector-icons/EvilIcons'
+import Icon from 'react-native-vector-icons/EvilIcons';
 
 import Slider from '@react-native-community/slider';
 
 const styles = StyleSheet.create({
   footer: {
-    backgroundColor: "#cdcdcd",
+    backgroundColor: '#cdcdcd',
     paddingTop: 0,
     bottom: 0,
     ...Platform.select({
@@ -31,21 +31,21 @@ const styles = StyleSheet.create({
     right: 0,
     left: 0,
     borderTopWidth: 1,
-    borderTopColor:"#000",
+    borderTopColor: '#000',
     position: 'absolute',
-    alignItems:'center',
-    justifyContent:'center',
-    flexDirection: 'row'
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
   },
   slider: {
     height: 30,
-    alignItems:'center',
-    justifyContent:'center',
+    alignItems: 'center',
+    justifyContent: 'center',
     flexDirection: 'row',
     flex: 1,
     marginLeft: 50,
-    marginRight: 50
-  }
+    marginRight: 50,
+  },
 });
 
 class BottomBar extends Component {
@@ -54,7 +54,6 @@ class BottomBar extends Component {
     this.state = {
       fadeAnim: new Animated.Value(1),
     };
-
 
     this.barsShown = true;
   }
@@ -83,10 +82,10 @@ class BottomBar extends Component {
     const timing = Animated.timing;
 
     Animated.sequence([
-      timing( this.state.fadeAnim, {
+      timing(this.state.fadeAnim, {
         toValue: 1,
-        duration: 20
-      })
+        duration: 20,
+      }),
     ]).start();
 
     this.barsShown = true;
@@ -96,12 +95,11 @@ class BottomBar extends Component {
     const timing = Animated.timing;
 
     Animated.sequence([
-      timing( this.state.fadeAnim, {
+      timing(this.state.fadeAnim, {
         toValue: 0,
-        duration: 20
-      })
+        duration: 20,
+      }),
     ]).start();
-
 
     this.barsShown = false;
   }
@@ -110,10 +108,11 @@ class BottomBar extends Component {
     return (
       <Animated.View style={[styles.footer, { opacity: this.state.fadeAnim }]}>
         <Slider
-            style={styles.slider}
-            disabled={this.props.disabled}
-            value={this.props.value}
-            onSlidingComplete={this.props.onSlidingComplete} />
+          style={styles.slider}
+          disabled={this.props.disabled}
+          value={this.props.value}
+          onSlidingComplete={this.props.onSlidingComplete}
+        />
       </Animated.View>
     );
   }

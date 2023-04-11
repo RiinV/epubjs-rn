@@ -27,7 +27,8 @@ var _eventEmitter = _interopRequireDefault(require("event-emitter"));
 
 var _utils = require("./utils");
 
-var _jsxFileName = "/Users/kaarel/Dev/RA/epub/epubjs-rn/src/Rendition.js";
+var _jsxFileName = '/Users/kaarel/Dev/RA/epub/epubjs-rn/src/Rendition.js';
+
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
@@ -35,7 +36,20 @@ function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && 
 
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0, _getPrototypeOf2.default)(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2.default)(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2.default)(this, result); }; }
 
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+var setPlatform = '<script>window.platform = "' + _reactNative.Platform.OS + '"</script>';
+
+var getEmbeddedHtml = function getEmbeddedHtml(backgroundColor) {
+  return (
+    '\n<!DOCTYPE html>\n<html>\n<head>\n  <meta charset="utf-8">\n  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no, viewport-fit=cover">\n  <title>epubjs</title>\n  ' +
+    setPlatform +
+    '\n  ' +
+    _utils.renditionEmbeddedScripts +
+    '\n  <style>\n    body {\n      background-color: ' +
+    backgroundColor +
+    ';\n      margin: 1px 0 0;\n      -webkit-tap-highlight-color: rgba(0,0,0,0);\n      -webkit-tap-highlight-color: transparent; /* For some Androids */\n    } \n\n    * {\n      overscroll-behavior: none !important;\n    }\n\n    /* For iPhone X Notch */\n    @media only screen\n      and (min-device-width : 375px)\n      and (max-device-width : 812px)\n      and (-webkit-device-pixel-ratio : 3) {\n      body {\n        padding-top: calc(env(safe-area-inset-top) / 2);\n      }\n    }\n  </style>\n</head><body></body></html>\n'
+  );
+};
 
 var EMBEDDED_HTML = "\n<!DOCTYPE html>\n<html>\n<head>\n  <meta charset=\"utf-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no, viewport-fit=cover\">\n  <title>epubjs</title>\n  " + _utils.renditionEmbeddedScripts + "\n  <style>\n    body {\n      margin: 0;\n      -webkit-tap-highlight-color: rgba(0,0,0,0);\n      -webkit-tap-highlight-color: transparent; /* For some Androids */\n    }\n\n    * {\n      overscroll-behavior: none;\n    }\n\n    /* For iPhone X Notch */\n    @media only screen\n      and (min-device-width : 375px)\n      and (max-device-width : 812px)\n      and (-webkit-device-pixel-ratio : 3) {\n      body {\n        padding-top: calc(env(safe-area-inset-top) / 2);\n      }\n    }\n  </style>\n</head><body></body></html>\n";
 
@@ -201,47 +215,28 @@ var Rendition = function (_Component) {
         return;
       }
 
-      this.sendToBridge('resize', [w, h]);
-    }
-  }, {
-    key: "flow",
-    value: function flow(f) {
-      this.sendToBridge('flow', [f]);
-    }
-  }, {
-    key: "themes",
-    value: function themes(t) {
-      this.sendToBridge('themes', [t]);
-    }
-  }, {
-    key: "theme",
-    value: function theme(t) {
-      this.sendToBridge('theme', [t]);
-    }
-  }, {
-    key: "font",
-    value: function font(f) {
-      this.sendToBridge('font', [f]);
-    }
-  }, {
-    key: "fontSize",
-    value: function fontSize(f) {
-      this.sendToBridge('fontSize', [f]);
-    }
-  }, {
-    key: "override",
-    value: function override(name, value, priority) {
-      this.sendToBridge('override', [name, value, priority]);
-    }
-  }, {
-    key: "gap",
-    value: function gap(_gap) {
-      this.sendToBridge('gap', [_gap]);
-    }
-  }, {
-    key: "setLocations",
-    value: function setLocations(locations) {
-      this.locations = locations;
+        if (this.props.url) {
+          this.load(this.props.url);
+        }
+      },
+    },
+    {
+      key: '_onBridgeMessage',
+      value: function _onBridgeMessage(e) {
+        var _this2 = this;
+
+        var msg = e.nativeEvent.data;
+        var decoded;
+
+        if (typeof msg === 'string') {
+          try {
+            decoded = JSON.parse(msg);
+          } catch (err) {
+            decoded = msg;
+          }
+        } else {
+          decoded = msg;
+        }
 
       if (this.isReady) {
         this.sendToBridge('setLocations', [this.locations]);
@@ -356,8 +351,23 @@ var Rendition = function (_Component) {
             break;
           }
 
-        case 'error':
-          {
+
+          case 'font': {
+            var _decoded;
+
+            var showIndicator = (_decoded = decoded) == null ? void 0 : _decoded.value;
+
+            if (showIndicator !== this.state.showIndicator) {
+              this.setState({
+                showIndicator: showIndicator,
+              });
+            }
+
+            break;
+          }
+
+          case 'error': {
+
             if (this.props.onError) {
               this.props.onError(decoded.value);
             } else {
@@ -387,9 +397,8 @@ var Rendition = function (_Component) {
             break;
           }
 
-        case 'rendered':
-          {
-            this.updateLayout();
+
+          case 'rendered': {
 
             if (!this.state.loaded) {
               this.setState({
@@ -400,10 +409,11 @@ var Rendition = function (_Component) {
             break;
           }
 
-        case 'relocated':
-          {
-            var _decoded = decoded,
-                location = _decoded.location;
+
+          case 'relocated': {
+            var _decoded2 = decoded,
+              location = _decoded2.location;
+
 
             this._relocated(location);
 
@@ -416,10 +426,11 @@ var Rendition = function (_Component) {
             break;
           }
 
-        case 'resized':
-          {
-            var _decoded2 = decoded,
-                size = _decoded2.size;
+
+          case 'resized': {
+            var _decoded3 = decoded,
+              size = _decoded3.size;
+
             break;
           }
 
@@ -441,41 +452,45 @@ var Rendition = function (_Component) {
             break;
           }
 
-        case 'selected':
-          {
-            var _decoded3 = decoded,
-                cfiRange = _decoded3.cfiRange,
-                selectedRect = _decoded3.selectedRect,
-                selectedText = _decoded3.selectedText;
+
+          case 'selected': {
+            var _decoded4 = decoded,
+              cfiRange = _decoded4.cfiRange,
+              selectedRect = _decoded4.selectedRect,
+              selectedText = _decoded4.selectedText;
+
 
             this._selected(cfiRange, selectedRect, selectedText);
 
             break;
           }
 
-        case 'markClicked':
-          {
-            var _decoded4 = decoded,
-                _cfiRange = _decoded4.cfiRange,
-                _selectedRect = _decoded4.selectedRect;
+
+          case 'markClicked': {
+            var _decoded5 = decoded,
+              _cfiRange = _decoded5.cfiRange,
+              _selectedRect = _decoded5.selectedRect;
+
 
             this._markClicked(_cfiRange, _selectedRect);
 
             break;
           }
 
-        case 'added':
-          {
-            var _decoded5 = decoded,
-                sectionIndex = _decoded5.sectionIndex;
+
+          case 'added': {
+            var _decoded6 = decoded,
+              sectionIndex = _decoded6.sectionIndex;
+
             this.props.onViewAdded && this.props.onViewAdded(sectionIndex);
             break;
           }
 
-        case 'removed':
-          {
-            var _decoded6 = decoded,
-                _sectionIndex = _decoded6.sectionIndex;
+
+          case 'removed': {
+            var _decoded7 = decoded,
+              _sectionIndex = _decoded7.sectionIndex;
+
             this.props.beforeViewRemoved && this.props.beforeViewRemoved(_sectionIndex);
             break;
           }
@@ -496,135 +511,142 @@ var Rendition = function (_Component) {
     value: function _relocated(visibleLocation) {
       this._visibleLocation = visibleLocation;
 
-      if (this.props.onRelocated) {
-        this.props.onRelocated(visibleLocation, this);
-      }
-    }
-  }, {
-    key: "_selected",
-    value: function _selected(cfiRange, selectedRect, selectedText) {
-      if (this.props.onSelected) {
-        this.props.onSelected(cfiRange, selectedRect, selectedText);
-      }
-    }
-  }, {
-    key: "_markClicked",
-    value: function _markClicked(cfiRange, selectedRect) {
-      if (this.props.onMarkClicked) {
-        this.props.onMarkClicked(cfiRange, selectedRect, this);
-      }
-    }
-  }, {
-    key: "_ready",
-    value: function _ready() {
-      this.isReady = true;
 
-      if (this.locations) {
-        this.sendToBridge('setLocations', [this.locations]);
-      }
+        this.props.onDisplayed && this.props.onDisplayed();
+      },
+    },
+    {
+      key: 'updateLayout',
+      value: function updateLayout() {
+        this.sendToBridge('updateLayout');
+      },
+    },
+    {
+      key: 'render',
+      value: function render() {
+        var _this3 = this;
 
-      this.props.onDisplayed && this.props.onDisplayed();
-    }
-  }, {
-    key: "updateLayout",
-    value: function updateLayout() {
-      this.sendToBridge('updateLayout');
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      var _this3 = this;
+        var loader = _react.default.createElement(
+          _reactNative.TouchableOpacity,
+          {
+            onPress: function onPress() {
+              return _this3.props.onPress('');
+            },
+            style: styles.loadScreen,
+            __self: this,
+            __source: {
+              fileName: _jsxFileName,
+              lineNumber: 449,
+              columnNumber: 7,
+            },
+          },
+          _react.default.createElement(
+            _reactNative.View,
+            {
+              style: [
+                styles.loadScreen,
+                {
+                  backgroundColor: this.props.backgroundColor || '#FFFFFF',
+                },
+              ],
+              __self: this,
+              __source: {
+                fileName: _jsxFileName,
+                lineNumber: 450,
+                columnNumber: 9,
+              },
+            },
+            _react.default.createElement(_reactNative.ActivityIndicator, {
+              color: this.props.color || 'black',
+              size: this.props.size || 'large',
+              style: {
+                flex: 1,
+              },
+              __self: this,
+              __source: {
+                fileName: _jsxFileName,
+                lineNumber: 457,
+                columnNumber: 11,
+              },
+            }),
+          ),
+        );
 
-      var loader = _react.default.createElement(_reactNative.TouchableOpacity, {
-        onPress: function onPress() {
-          return _this3.props.onPress('');
-        },
-        style: styles.loadScreen,
-        __self: this,
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 432,
-          columnNumber: 7
+        if (!this.props.url) {
+          return loader;
         }
-      }, _react.default.createElement(_reactNative.View, {
-        style: [styles.loadScreen, {
-          backgroundColor: this.props.backgroundColor || '#FFFFFF'
-        }],
-        __self: this,
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 433,
-          columnNumber: 9
-        }
-      }, _react.default.createElement(_reactNative.ActivityIndicator, {
-        color: this.props.color || 'black',
-        size: this.props.size || 'large',
-        style: {
-          flex: 1
-        },
-        __self: this,
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 440,
-          columnNumber: 11
-        }
-      })));
 
-      if (!this.props.url) {
-        return loader;
-      }
+        return _react.default.createElement(
+          _reactNative.View,
+          {
+            ref: this.framerRef,
+            style: [
+              styles.container,
+              {
+                maxWidth: this.props.width,
+                maxHeight: this.props.height,
+                minWidth: this.props.width,
+                minHeight: this.props.height,
+              },
+            ],
+            __self: this,
+            __source: {
+              fileName: _jsxFileName,
+              lineNumber: 471,
+              columnNumber: 7,
+            },
+          },
+          _react.default.createElement(
+            _reactNativeWebview.WebView,
+            (0, _extends2.default)(
+              {
+                showsHorizontalScrollIndicator: this.props.showsHorizontalScrollIndicator,
+                showsVerticalScrollIndicator: this.props.showsVerticalScrollIndicator,
+                ref: this.webviewbridgeRef,
+                source: {
+                  html: getEmbeddedHtml(this.props.backgroundColor),
+                  baseUrl: this.props.url,
+                },
+                style: [
+                  styles.manager,
+                  {
+                    opacity: 0.99,
+                    backgroundColor: this.props.backgroundColor || '#FFFFFF',
+                  },
+                ],
+                bounces: false,
+                javaScriptEnabled: true,
+                scrollEnabled: this.props.scrollEnabled,
+                pagingEnabled: this.props.pagingEnabled,
+                onMessage: this._onBridgeMessage.bind(this),
+                contentInsetAdjustmentBehavior: 'never',
+                menuItems: this.props.onTextSelectedContextMenuItems,
+                onCustomMenuSelection: this.props.onCustomMenuSelection,
+                contentInset: this.props.contentInset,
+                scalesPageToFit: this.props.scalesPageToFit || false,
+                automaticallyAdjustContentInsets: false,
+                originWhitelist: ['*'],
+                allowsLinkPreview: false,
+                onNavigationStateChange: this.props.onNavigationStateChange,
+                onShouldStartLoadWithRequest: this.props.onShouldStartLoadWithRequest,
+              },
+              this.props.webviewProps || {},
+              {
+                __self: this,
+                __source: {
+                  fileName: _jsxFileName,
+                  lineNumber: 482,
+                  columnNumber: 9,
+                },
+              },
+            ),
+          ),
+          !this.state.loaded || this.state.showIndicator || this.props.showIndicator ? loader : null,
+        );
+      },
+    },
+  ]);
 
-      return _react.default.createElement(_reactNative.View, {
-        ref: this.framerRef,
-        style: [styles.container, {
-          maxWidth: this.props.width,
-          maxHeight: this.props.height,
-          minWidth: this.props.width,
-          minHeight: this.props.height
-        }],
-        __self: this,
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 454,
-          columnNumber: 7
-        }
-      }, _react.default.createElement(_reactNativeWebview.WebView, (0, _extends2.default)({
-        showsHorizontalScrollIndicator: this.props.showsHorizontalScrollIndicator,
-        showsVerticalScrollIndicator: this.props.showsVerticalScrollIndicator,
-        ref: this.webviewbridgeRef,
-        source: {
-          html: EMBEDDED_HTML,
-          baseUrl: this.props.url
-        },
-        style: [styles.manager, {
-          opacity: 0.99,
-          backgroundColor: this.props.backgroundColor || '#FFFFFF'
-        }],
-        bounces: false,
-        javaScriptEnabled: true,
-        scrollEnabled: this.props.scrollEnabled,
-        pagingEnabled: this.props.pagingEnabled,
-        onMessage: this._onBridgeMessage.bind(this),
-        contentInsetAdjustmentBehavior: "never",
-        menuItems: this.props.onTextSelectedContextMenuItems,
-        onCustomMenuSelection: this.props.onCustomMenuSelection,
-        contentInset: this.props.contentInset,
-        scalesPageToFit: this.props.scalesPageToFit || false,
-        automaticallyAdjustContentInsets: false,
-        originWhitelist: ['*'],
-        allowsLinkPreview: false,
-        onNavigationStateChange: this.props.onNavigationStateChange,
-        onShouldStartLoadWithRequest: this.props.onShouldStartLoadWithRequest
-      }, this.props.webviewProps || {}, {
-        __self: this,
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 465,
-          columnNumber: 9
-        }
-      })), !this.state.loaded || this.state.showIndicator || this.props.showIndicator ? loader : null);
-    }
-  }]);
   return Rendition;
 }(_react.Component);
 

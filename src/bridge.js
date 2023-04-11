@@ -78,7 +78,7 @@ function closestMultiple(N, M) {
     }
 
     function handleMessage(message) {
-      var decoded = typeof message == 'object' ? message : JSON.parse(message);
+      var decoded = typeof message === 'object' ? message : JSON.parse(message);
       var response;
       var result;
 
@@ -305,160 +305,160 @@ function closestMultiple(N, M) {
 
       window.rendition = rendition = book.renderTo(document.body, settings);
 
-      rendition.hooks.content.register(
-        function (contents, rendition) {
-          var doc = contents.document;
-          var startPosition = { x: -1, y: -1 };
-          var currentPosition = { x: -1, y: -1 };
-          var isLongPress = false;
-          var longPressTimer;
-          var touchduration = 250;
-          var $body = doc.getElementsByTagName('body')[0];
-          var lastTap = undefined;
-          var preventTap = false;
-          var doubleTap = false;
+      rendition.hooks.content.register(function (contents, rendition) {
+        var doc = contents.document;
+        var startPosition = { x: -1, y: -1 };
+        var currentPosition = { x: -1, y: -1 };
+        var isLongPress = false;
+        var longPressTimer;
+        var touchduration = 250;
+        var $body = doc.getElementsByTagName('body')[0];
+        var lastTap = undefined;
+        var preventTap = false;
+        var doubleTap = false;
 
+        const urlRightSide = url ? url.split('localhost:')[1] : '';
+        const urlPort = urlRightSide ? urlRightSide.split('/')[0] : '';
+
+        if (urlPort) {
           // Add custom css in local Http server root to include font-face files
-          contents.addStylesheet('http://localhost:3222/custom.css');
+          contents.addStylesheet(`http://localhost:${urlPort}/custom.css`);
+        }
 
-          function touchStartHandler(e) {
-            var f, target;
-            startPosition.x = e.targetTouches[0].pageX;
-            startPosition.y = e.targetTouches[0].pageY;
-            currentPosition.x = e.targetTouches[0].pageX;
-            currentPosition.y = e.targetTouches[0].pageY;
-            isLongPress = false;
-            touchstartX = e.changedTouches[0].screenX;
-            if (isWebkit) {
-              for (var i = 0; i < e.targetTouches.length; i++) {
-                f = e.changedTouches[i].force;
-                if (f >= 0.8 && !preventTap) {
-                  target = e.changedTouches[i].target;
+        function touchStartHandler(e) {
+          var f, target;
+          startPosition.x = e.targetTouches[0].pageX;
+          startPosition.y = e.targetTouches[0].pageY;
+          currentPosition.x = e.targetTouches[0].pageX;
+          currentPosition.y = e.targetTouches[0].pageY;
+          isLongPress = false;
+          touchstartX = e.changedTouches[0].screenX;
+          if (isWebkit) {
+            for (var i = 0; i < e.targetTouches.length; i++) {
+              f = e.changedTouches[i].force;
+              if (f >= 0.8 && !preventTap) {
+                target = e.changedTouches[i].target;
 
-                  if (target.getAttribute('ref') === 'epubjs-mk') {
-                    return;
-                  }
-
-                  clearTimeout(longPressTimer);
-
-                  cfi = contents.cfiFromNode(target).toString();
-
-                  sendMessage({ method: 'longpress', position: currentPosition, cfi: cfi });
-                  isLongPress = false;
-                  preventTap = true;
+                if (target.getAttribute('ref') === 'epubjs-mk') {
+                  return;
                 }
+
+                clearTimeout(longPressTimer);
+
+                cfi = contents.cfiFromNode(target).toString();
+
+                sendMessage({ method: 'longpress', position: currentPosition, cfi: cfi });
+                isLongPress = false;
+                preventTap = true;
               }
             }
+          }
 
-            let now = Date.now();
-            if (lastTap && now - lastTap < touchduration && !doubleTap) {
-              let imgSrc = null;
-              if (e.changedTouches[0].target.hasAttribute('src')) {
-                imgSrc = e.changedTouches[0].target.getAttribute('src');
-              }
-              doubleTap = true;
-              preventTap = true;
-              cfi = contents.cfiFromNode(e.changedTouches[0].target).toString();
-
-              sendMessage({ method: 'dblpress', position: currentPosition, cfi: cfi, imgSrc: imgSrc });
-            } else {
-              lastTap = now;
+          const now = Date.now();
+          if (lastTap && now - lastTap < touchduration && !doubleTap) {
+            let imgSrc = null;
+            if (e.changedTouches[0].target.hasAttribute('src')) {
+              imgSrc = e.changedTouches[0].target.getAttribute('src');
             }
+            doubleTap = true;
+            preventTap = true;
+            cfi = contents.cfiFromNode(e.changedTouches[0].target).toString();
 
-            longPressTimer = setTimeout(function () {
-              target = e.targetTouches[0].target;
-
-              if (target.getAttribute('ref') === 'epubjs-mk') {
-                return;
-              }
-
-              cfi = contents.cfiFromNode(target).toString();
-
-              sendMessage({ method: 'longpress', position: currentPosition, cfi: cfi });
-              preventTap = true;
-            }, touchduration);
+            sendMessage({ method: 'dblpress', position: currentPosition, cfi: cfi, imgSrc: imgSrc });
+          } else {
+            lastTap = now;
           }
 
-          function touchMoveHandler(e) {
-            currentPosition.x = e.targetTouches[0].pageX;
-            currentPosition.y = e.targetTouches[0].pageY;
-            clearTimeout(longPressTimer);
-          }
+          longPressTimer = setTimeout(function () {
+            target = e.targetTouches[0].target;
 
-          function touchEndHandler(e) {
-            var cfi;
-            clearTimeout(longPressTimer);
-            touchendX = e.changedTouches[0].screenX;
-            checkDirection();
-            // Make it false after checkDirection
-            isTextSelection = false;
-            if (preventTap) {
-              preventTap = false;
+            if (target.getAttribute('ref') === 'epubjs-mk') {
               return;
             }
 
-            if (
-              Math.abs(startPosition.x - currentPosition.x) < 2 &&
-              Math.abs(startPosition.y - currentPosition.y) < 2
-            ) {
-              var target = e.changedTouches[0].target;
+            cfi = contents.cfiFromNode(target).toString();
 
-              if (
-                target.getAttribute('ref') === 'epubjs-mk' ||
-                target.getAttribute('ref') === 'epubjs-hl' ||
-                target.getAttribute('ref') === 'epubjs-ul'
-              ) {
-                return;
-              }
+            sendMessage({ method: 'longpress', position: currentPosition, cfi: cfi });
+            preventTap = true;
+          }, touchduration);
+        }
 
-              cfi = contents.cfiFromNode(target).toString();
+        function touchMoveHandler(e) {
+          currentPosition.x = e.targetTouches[0].pageX;
+          currentPosition.y = e.targetTouches[0].pageY;
+          clearTimeout(longPressTimer);
+        }
 
-              if (isLongPress) {
-                sendMessage({ method: 'longpress', position: currentPosition, cfi: cfi });
-                isLongPress = false;
-              } else {
-                setTimeout(function () {
-                  if (preventTap || doubleTap) {
-                    preventTap = false;
-                    isLongPress = false;
-                    doubleTap = false;
-                    return;
-                  }
-                  sendMessage({ method: 'press', position: currentPosition, cfi: cfi });
-                }, touchduration);
-              }
-            }
+        function touchEndHandler(e) {
+          var cfi;
+          clearTimeout(longPressTimer);
+          touchendX = e.changedTouches[0].screenX;
+          checkDirection();
+          // Make it false after checkDirection
+          isTextSelection = false;
+          if (preventTap) {
+            preventTap = false;
+            return;
           }
 
-          function touchForceHandler(e) {
-            var f = e.changedTouches[0].force;
-            if (f >= 0.8 && !preventTap) {
-              var target = e.changedTouches[0].target;
+          if (Math.abs(startPosition.x - currentPosition.x) < 2 && Math.abs(startPosition.y - currentPosition.y) < 2) {
+            var target = e.changedTouches[0].target;
 
-              if (target.getAttribute('ref') === 'epubjs-mk') {
-                return;
-              }
+            if (
+              target.getAttribute('ref') === 'epubjs-mk' ||
+              target.getAttribute('ref') === 'epubjs-hl' ||
+              target.getAttribute('ref') === 'epubjs-ul'
+            ) {
+              return;
+            }
 
-              clearTimeout(longPressTimer);
+            cfi = contents.cfiFromNode(target).toString();
 
-              cfi = contents.cfiFromNode(target).toString();
-
+            if (isLongPress) {
               sendMessage({ method: 'longpress', position: currentPosition, cfi: cfi });
               isLongPress = false;
-              preventTap = true;
-              doubleTap = false;
+            } else {
+              setTimeout(function () {
+                if (preventTap || doubleTap) {
+                  preventTap = false;
+                  isLongPress = false;
+                  doubleTap = false;
+                  return;
+                }
+                sendMessage({ method: 'press', position: currentPosition, cfi: cfi });
+              }, touchduration);
             }
           }
+        }
 
-          doc.addEventListener('touchstart', touchStartHandler, false);
+        function touchForceHandler(e) {
+          var f = e.changedTouches[0].force;
+          if (f >= 0.8 && !preventTap) {
+            var target = e.changedTouches[0].target;
 
-          doc.addEventListener('touchmove', touchMoveHandler, false);
+            if (target.getAttribute('ref') === 'epubjs-mk') {
+              return;
+            }
 
-          doc.addEventListener('touchend', touchEndHandler, false);
+            clearTimeout(longPressTimer);
 
-          doc.addEventListener('touchforcechange', touchForceHandler, false);
-        }.bind(this),
-      );
+            cfi = contents.cfiFromNode(target).toString();
+
+            sendMessage({ method: 'longpress', position: currentPosition, cfi: cfi });
+            isLongPress = false;
+            preventTap = true;
+            doubleTap = false;
+          }
+        }
+
+        doc.addEventListener('touchstart', touchStartHandler, false);
+
+        doc.addEventListener('touchmove', touchMoveHandler, false);
+
+        doc.addEventListener('touchend', touchEndHandler, false);
+
+        doc.addEventListener('touchforcechange', touchForceHandler, false);
+      });
 
       rendition.on('relocated', function (location) {
         sendMessage({ method: 'relocated', location: location });

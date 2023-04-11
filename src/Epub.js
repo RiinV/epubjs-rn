@@ -171,7 +171,7 @@ class Epub extends Component {
 
   // LANDSCAPE PORTRAIT UNKNOWN PORTRAITUPSIDEDOWN
   _orientationDidChange(orientation) {
-    let wait = 10;
+    const wait = 10;
     let _orientation = orientation;
 
     if (!this.active || !this._isMounted) {
