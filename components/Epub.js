@@ -37,6 +37,7 @@ var _Streamer = _interopRequireDefault(require('./Streamer'));
 
 var _jsxFileName = '/Users/kaarel/Dev/RA/epub/epubjs-rn/src/Epub.js';
 
+
 function _getRequireWildcardCache(nodeInterop) {
   if (typeof WeakMap !== 'function') {
     return null;

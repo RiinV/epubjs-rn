@@ -375,7 +375,12 @@ function closestMultiple(N, M) {
         var lastTap = undefined;
         var preventTap = false;
         var doubleTap = false;
-        contents.addStylesheet('http://localhost:3222/custom.css');
+        var urlRightSide = url ? url.split('localhost:')[1] : '';
+        var urlPort = urlRightSide ? urlRightSide.split('/')[0] : '';
+
+        if (urlPort) {
+          contents.addStylesheet('http://localhost:' + urlPort + '/custom.css');
+        }
 
         function touchStartHandler(e) {
           var f, target;
