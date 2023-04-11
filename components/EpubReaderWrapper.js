@@ -46,7 +46,6 @@ var _excluded = [
 ];
 
 var _this = this,
-
   _jsxFileName = '/Users/kaarel/Dev/RA/epub/epubjs-rn/src/EpubReaderWrapper.js';
 
 function _getRequireWildcardCache(nodeInterop) {

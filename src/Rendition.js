@@ -28,10 +28,6 @@ const getEmbeddedHtml = (backgroundColor) => `
     }
 
     * {
-      overscroll-behavior: none;
-    }
-
-    * {
       overscroll-behavior: none !important;
     }
 

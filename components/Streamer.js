@@ -99,14 +99,34 @@ var EpubStreamer = (function () {
     },
     {
       key: 'add',
-      value: function add(bookUrl) {
+      value: function add(bookUrl, isSample) {
         var _this3 = this;
 
         var filename = this.filename(bookUrl);
         var epubDir = Dirs.DocumentDir + '/' + filename + '.epub';
         var targetPath = Dirs.DocumentDir + '/' + this.root + '/' + filename;
 
-        if (_rnFetchBlob.default.fs.exists(epubDir)) {
+        if (isSample) {
+          return _rnFetchBlob.default
+            .config({
+              fileCache: true,
+              path: Dirs.DocumentDir + '/' + filename,
+            })
+            .fetch('GET', bookUrl)
+            .then(function (res) {
+              var sourcePath = res.path();
+              var url = _this3.serverOrigin + '/' + filename + '/';
+              return (0, _reactNativeZipArchive.unzip)(sourcePath, targetPath).then(function (path) {
+                _this3.urls.push(bookUrl);
+
+                _this3.locals.push(url);
+
+                _this3.paths.push(path);
+
+                return url;
+              });
+            });
+        } else if (_rnFetchBlob.default.fs.exists(epubDir)) {
           return (0, _reactNativeZipArchive.unzip)(epubDir, targetPath).then(function (path) {
             var url = _this3.serverOrigin + '/' + filename + '/';
 
@@ -131,7 +151,7 @@ var EpubStreamer = (function () {
     },
     {
       key: 'get',
-      value: function get(bookUrl) {
+      value: function get(bookUrl, isSample) {
         var _this4 = this;
 
         return this.check(bookUrl).then(function (exists) {
@@ -142,7 +162,7 @@ var EpubStreamer = (function () {
             return url;
           }
 
-          return _this4.add(bookUrl);
+          return _this4.add(bookUrl, isSample);
         });
       },
     },
