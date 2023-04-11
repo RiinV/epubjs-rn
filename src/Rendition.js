@@ -25,7 +25,11 @@ const getEmbeddedHtml = (backgroundColor) => `
       margin: 1px 0 0;
       -webkit-tap-highlight-color: rgba(0,0,0,0);
       -webkit-tap-highlight-color: transparent; /* For some Androids */
-    } 
+    }
+
+    * {
+      overscroll-behavior: none;
+    }
 
     * {
       overscroll-behavior: none !important;
