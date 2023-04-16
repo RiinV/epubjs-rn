@@ -60,6 +60,8 @@
     "gulp": "4.0.2",
     "jest": "24.8.0",
     "metro-react-native-babel-preset": "0.59.0",
+    "patch-package": "^6.5.1",
+    "postinstall-postinstall": "^2.1.0",
     "prettier": "^2.0.5",
     "prettier-eslint": "^11.0.0",
     "react-hooks": "^1.0.1",
