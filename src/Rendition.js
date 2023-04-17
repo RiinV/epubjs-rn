@@ -117,8 +117,6 @@ class Rendition extends Component {
       return;
     }
 
-    // console.log("loading book: ", bookUrl);
-
     const config = {
       minSpreadWidth: this.props.minSpreadWidth || 815,
       flow: this.props.flow || 'paginated',
