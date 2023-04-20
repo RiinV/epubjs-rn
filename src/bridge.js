@@ -41,6 +41,8 @@ function closestMultiple(N, M) {
     var minSpreadWidth = 815;
     var axis = 'horizontal';
     var isTextSelection = false;
+    var isSomethingSelected = false;
+    var isSelectionActive = false;
 
     var isChrome = /Chrome/.test(navigator.userAgent);
     var isWebkit = !isChrome && /AppleWebKit/.test(navigator.userAgent);
@@ -60,6 +62,9 @@ function closestMultiple(N, M) {
     }
 
     function checkDirection() {
+      if (isSomethingSelected) {
+        return;
+      }
       const RANGE_TO_SWIPE = 75;
       const { page, total } = book.rendition.location.start.displayed;
       if (touchendX < touchstartX - RANGE_TO_SWIPE) {
@@ -464,12 +469,40 @@ function closestMultiple(N, M) {
         sendMessage({ method: 'relocated', location: location });
       });
 
-      rendition.on('selected', function (cfiRange, contents) {
+      rendition.on('selectionIsActiveChange', function (newSelectionActiveValue, contents3) {
+        // TODO: currently commented out, some code to test scrolling to next page on android during selection
+        // const selection = contents3.document.getSelection();
+        // const range = selection.getRangeAt(0);
+        // console.log('range end offset', range.endOffset);
+        // console.log('range end container', range.endContainer.length);
+        // if (range.endContainer.length - range.endOffset < 2) {
+        //   console.warn('we should scroll a bit towards next view');
+        //   const isFullPageVisible = window.scrollX / window.innerWidth;
+        //   console.warn('isFullPageVisible', isFullPageVisible);
+        //   if (isFullPageVisible) {
+        //     window.scrollTo(window.scrollX + 20, 0);
+        //   }
+        // }
+        if (newSelectionActiveValue !== isSelectionActive) {
+          isSelectionActive = newSelectionActiveValue;
+          const selection = contents3.document.getSelection();
+          const htmlElement = window.document.querySelector('html');
+          var selectedText = selection.toString();
+          isSomethingSelected = !!selectedText;
+          htmlElement.style['overflow-x'] = selectedText ? 'auto' : 'hidden';
+          sendMessage({
+            method: 'selectionIsActiveChange',
+            isSomethingSelected: isSomethingSelected,
+          });
+        }
+      });
+
+      rendition.on('selected', function (cfiRange, contents2) {
         isTextSelection = true;
-        var range = contents.range(cfiRange);
+        var range = contents2.range(cfiRange);
         var rect = range.getBoundingClientRect();
         var selectedCfiRange = cfiRange;
-        var selectedText = contents.document.getSelection().toString();
+        var selectedText = contents2.document.getSelection().toString();
 
         sendMessage({ method: 'selected', cfiRange: cfiRange, selectedRect: rect, selectedText });
       });

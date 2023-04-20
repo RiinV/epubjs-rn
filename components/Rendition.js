@@ -132,6 +132,7 @@ var Rendition = (function (_Component) {
     _this.state = {
       loaded: false,
       showIndicator: false,
+      pagingEnabled: props.pagingEnabled,
     };
     return _this;
   }
@@ -602,6 +603,13 @@ var Rendition = (function (_Component) {
             break;
           }
 
+          case 'selectionIsActiveChange': {
+            this.setState({
+              pagingEnabled: this.props.pagingEnabled ? !decoded.isSomethingSelected : false,
+            });
+            break;
+          }
+
           default: {
           }
         }
@@ -666,7 +674,7 @@ var Rendition = (function (_Component) {
             __self: this,
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 447,
+              lineNumber: 454,
               columnNumber: 7,
             },
           },
@@ -682,7 +690,7 @@ var Rendition = (function (_Component) {
               __self: this,
               __source: {
                 fileName: _jsxFileName,
-                lineNumber: 448,
+                lineNumber: 455,
                 columnNumber: 9,
               },
             },
@@ -695,7 +703,7 @@ var Rendition = (function (_Component) {
               __self: this,
               __source: {
                 fileName: _jsxFileName,
-                lineNumber: 455,
+                lineNumber: 462,
                 columnNumber: 11,
               },
             }),
@@ -722,7 +730,7 @@ var Rendition = (function (_Component) {
             __self: this,
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 469,
+              lineNumber: 476,
               columnNumber: 7,
             },
           },
@@ -747,7 +755,7 @@ var Rendition = (function (_Component) {
                 bounces: false,
                 javaScriptEnabled: true,
                 scrollEnabled: this.props.scrollEnabled,
-                pagingEnabled: this.props.pagingEnabled,
+                pagingEnabled: this.state.pagingEnabled,
                 onMessage: this._onBridgeMessage.bind(this),
                 contentInsetAdjustmentBehavior: 'never',
                 menuItems: this.props.onTextSelectedContextMenuItems,
@@ -765,7 +773,7 @@ var Rendition = (function (_Component) {
                 __self: this,
                 __source: {
                   fileName: _jsxFileName,
-                  lineNumber: 480,
+                  lineNumber: 487,
                   columnNumber: 9,
                 },
               },

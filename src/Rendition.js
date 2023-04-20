@@ -54,6 +54,7 @@ class Rendition extends Component {
     this.state = {
       loaded: false,
       showIndicator: false,
+      pagingEnabled: props.pagingEnabled,
     };
   }
 
@@ -405,6 +406,12 @@ class Rendition extends Component {
         this._ready();
         break;
       }
+      case 'selectionIsActiveChange': {
+        this.setState({
+          pagingEnabled: this.props.pagingEnabled ? !decoded.isSomethingSelected : false,
+        });
+        break;
+      }
       default: {
         // console.log("msg", decoded);
       }
@@ -495,7 +502,7 @@ class Rendition extends Component {
           bounces={false}
           javaScriptEnabled={true}
           scrollEnabled={this.props.scrollEnabled}
-          pagingEnabled={this.props.pagingEnabled}
+          pagingEnabled={this.state.pagingEnabled}
           onMessage={this._onBridgeMessage.bind(this)}
           contentInsetAdjustmentBehavior='never'
           menuItems={this.props.onTextSelectedContextMenuItems}
