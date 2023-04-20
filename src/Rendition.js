@@ -29,7 +29,7 @@ const getEmbeddedHtml = (backgroundColor) => `
 
     * {
       overscroll-behavior: none !important;
-      scroll-padding: 50px;
+      scroll-padding: 40px;
     }
 
     /* For iPhone X Notch */
