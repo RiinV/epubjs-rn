@@ -3320,7 +3320,7 @@ envinfo@^7.7.2:
 
 "epubjs@https://github.com/RiinV/epub.js#EBM-139":
   version "0.3.86"
-  resolved "https://github.com/RiinV/epub.js#6c37310239eab0a8d54c8b3161c4dc3be247199d"
+  resolved "https://github.com/RiinV/epub.js#ea58166c95ec5b2470954fe3b712d6a86bb7fa4b"
   dependencies:
     "@types/jszip" "^3.4.1"
     "@types/localforage" "0.0.34"
