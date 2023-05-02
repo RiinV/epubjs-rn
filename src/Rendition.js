@@ -10,7 +10,7 @@ import { renditionEmbeddedScripts } from './utils';
 
 const setPlatform = `<script>window.platform = "${Platform.OS}"</script>`;
 
-const getEmbeddedHtml = (backgroundColor) => `
+const EMBEDDED_HTML = `
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,7 +21,6 @@ const getEmbeddedHtml = (backgroundColor) => `
   ${renditionEmbeddedScripts}
   <style>
     body {
-      background-color: ${backgroundColor};
       margin: 1px 0 0;
       -webkit-tap-highlight-color: rgba(0,0,0,0);
       -webkit-tap-highlight-color: transparent; /* For some Androids */
@@ -29,7 +28,7 @@ const getEmbeddedHtml = (backgroundColor) => `
 
     * {
       overscroll-behavior: none !important;
-      scroll-padding: 40px;
+      // scroll-padding: 40px;
     }
 
     /* For iPhone X Notch */
@@ -407,12 +406,12 @@ class Rendition extends Component {
         this._ready();
         break;
       }
-      case 'selectionIsActiveChange': {
-        this.setState({
-          pagingEnabled: this.props.pagingEnabled ? !decoded.isSomethingSelected : false,
-        });
-        break;
-      }
+      // case 'selectionIsActiveChange': {
+      //   this.setState({
+      //     pagingEnabled: this.props.pagingEnabled ? !decoded.isSomethingSelected : false,
+      //   });
+      //   break;
+      // }
       default: {
         // console.log("msg", decoded);
       }
@@ -490,7 +489,7 @@ class Rendition extends Component {
           showsVerticalScrollIndicator={this.props.showsVerticalScrollIndicator}
           ref={this.webviewbridgeRef}
           source={{
-            html: getEmbeddedHtml(this.props.backgroundColor),
+            html: EMBEDDED_HTML,
             baseUrl: this.props.url,
           }}
           style={[
@@ -503,7 +502,7 @@ class Rendition extends Component {
           bounces={false}
           javaScriptEnabled={true}
           scrollEnabled={this.props.scrollEnabled}
-          pagingEnabled={this.state.pagingEnabled}
+          pagingEnabled={this.props.pagingEnabled}
           onMessage={this._onBridgeMessage.bind(this)}
           contentInsetAdjustmentBehavior='never'
           menuItems={this.props.onTextSelectedContextMenuItems}

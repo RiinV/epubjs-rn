@@ -551,20 +551,6 @@ function closestMultiple(N, M) {
           location: location,
         });
       });
-      rendition.on('selectionIsActiveChange', function (newSelectionActiveValue, contents3) {
-        if (newSelectionActiveValue !== isSelectionActive) {
-          isSelectionActive = newSelectionActiveValue;
-          var selection = contents3.document.getSelection();
-          var htmlElement = window.document.querySelector('html');
-          var selectedText = selection.toString();
-          isSomethingSelected = !!selectedText;
-          htmlElement.style['overflow-x'] = selectedText ? 'auto' : 'hidden';
-          sendMessage({
-            method: 'selectionIsActiveChange',
-            isSomethingSelected: isSomethingSelected,
-          });
-        }
-      });
       rendition.on('selected', function (cfiRange, contents2) {
         isTextSelection = true;
         var range = contents2.range(cfiRange);

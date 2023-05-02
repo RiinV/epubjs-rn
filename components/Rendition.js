@@ -104,18 +104,12 @@ function _isNativeReflectConstruct() {
 }
 
 var setPlatform = '<script>window.platform = "' + _reactNative.Platform.OS + '"</script>';
-
-var getEmbeddedHtml = function getEmbeddedHtml(backgroundColor) {
-  return (
-    '\n<!DOCTYPE html>\n<html>\n<head>\n  <meta charset="utf-8">\n  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no, viewport-fit=cover">\n  <title>epubjs</title>\n  ' +
-    setPlatform +
-    '\n  ' +
-    _utils.renditionEmbeddedScripts +
-    '\n  <style>\n    body {\n      background-color: ' +
-    backgroundColor +
-    ';\n      margin: 1px 0 0;\n      -webkit-tap-highlight-color: rgba(0,0,0,0);\n      -webkit-tap-highlight-color: transparent; /* For some Androids */\n    }\n\n    * {\n      overscroll-behavior: none !important;\n      scroll-padding: 40px;\n    }\n\n    /* For iPhone X Notch */\n    @media only screen\n      and (min-device-width : 375px)\n      and (max-device-width : 812px)\n      and (-webkit-device-pixel-ratio : 3) {\n      body {\n        padding-top: calc(env(safe-area-inset-top) / 2);\n      }\n    }\n  </style>\n</head><body></body></html>\n'
-  );
-};
+var EMBEDDED_HTML =
+  '\n<!DOCTYPE html>\n<html>\n<head>\n  <meta charset="utf-8">\n  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no, viewport-fit=cover">\n  <title>epubjs</title>\n  ' +
+  setPlatform +
+  '\n  ' +
+  _utils.renditionEmbeddedScripts +
+  '\n  <style>\n    body {\n      margin: 1px 0 0;\n      -webkit-tap-highlight-color: rgba(0,0,0,0);\n      -webkit-tap-highlight-color: transparent; /* For some Androids */\n    }\n\n    * {\n      overscroll-behavior: none !important;\n      // scroll-padding: 40px;\n    }\n\n    /* For iPhone X Notch */\n    @media only screen\n      and (min-device-width : 375px)\n      and (max-device-width : 812px)\n      and (-webkit-device-pixel-ratio : 3) {\n      body {\n        padding-top: calc(env(safe-area-inset-top) / 2);\n      }\n    }\n  </style>\n</head><body></body></html>\n';
 
 var Rendition = (function (_Component) {
   (0, _inherits2.default)(Rendition, _Component);
@@ -603,13 +597,6 @@ var Rendition = (function (_Component) {
             break;
           }
 
-          case 'selectionIsActiveChange': {
-            this.setState({
-              pagingEnabled: this.props.pagingEnabled ? !decoded.isSomethingSelected : false,
-            });
-            break;
-          }
-
           default: {
           }
         }
@@ -674,7 +661,7 @@ var Rendition = (function (_Component) {
             __self: this,
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 455,
+              lineNumber: 454,
               columnNumber: 7,
             },
           },
@@ -690,7 +677,7 @@ var Rendition = (function (_Component) {
               __self: this,
               __source: {
                 fileName: _jsxFileName,
-                lineNumber: 456,
+                lineNumber: 455,
                 columnNumber: 9,
               },
             },
@@ -703,7 +690,7 @@ var Rendition = (function (_Component) {
               __self: this,
               __source: {
                 fileName: _jsxFileName,
-                lineNumber: 463,
+                lineNumber: 462,
                 columnNumber: 11,
               },
             }),
@@ -730,7 +717,7 @@ var Rendition = (function (_Component) {
             __self: this,
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 477,
+              lineNumber: 476,
               columnNumber: 7,
             },
           },
@@ -742,7 +729,7 @@ var Rendition = (function (_Component) {
                 showsVerticalScrollIndicator: this.props.showsVerticalScrollIndicator,
                 ref: this.webviewbridgeRef,
                 source: {
-                  html: getEmbeddedHtml(this.props.backgroundColor),
+                  html: EMBEDDED_HTML,
                   baseUrl: this.props.url,
                 },
                 style: [
@@ -755,7 +742,7 @@ var Rendition = (function (_Component) {
                 bounces: false,
                 javaScriptEnabled: true,
                 scrollEnabled: this.props.scrollEnabled,
-                pagingEnabled: this.state.pagingEnabled,
+                pagingEnabled: this.props.pagingEnabled,
                 onMessage: this._onBridgeMessage.bind(this),
                 contentInsetAdjustmentBehavior: 'never',
                 menuItems: this.props.onTextSelectedContextMenuItems,
@@ -773,7 +760,7 @@ var Rendition = (function (_Component) {
                 __self: this,
                 __source: {
                   fileName: _jsxFileName,
-                  lineNumber: 488,
+                  lineNumber: 487,
                   columnNumber: 9,
                 },
               },
