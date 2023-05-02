@@ -14,6 +14,18 @@ function closestMultiple(N, M) {
   return multiple2;
 }
 
+// function nextMultiple(N, M) {
+//   const quotient = Math.floor(N / M);
+//   const multiple = M * (quotient + 1);
+//   return multiple;
+// }
+
+// function previousMultiple(N, M) {
+//   const quotient = Math.floor(N / M);
+//   const multiple = M * quotient;
+//   return multiple;
+// }
+
 (function () {
   function _ready() {
     var contents;
@@ -293,6 +305,27 @@ function closestMultiple(N, M) {
         }
       }
     }
+
+    // TODO: potentially continue this to try and work around EBM-139
+    // function attemptSwipeWhileSelecting() {
+    //   const nextPagePosition = nextMultiple(window.scrollX + window.innerWidth, window.innerWidth);
+    //   const previousPagePosition = previousMultiple(window.scrollX - window.innerWidth, window.innerWidth);
+    //   const currentPagePosition = closestMultiple(window.scrollX, window.innerWidth);
+
+    //   const actualScrollPosition = Math.round(window.scrollX);
+    //   const rangeForSnap = 40;
+
+    //   const shouldScrollToNext = actualScrollPosition > currentPagePosition + rangeForSnap;
+    //   const scrollPositionInPreviousPage = actualScrollPosition + rangeForSnap < currentPagePosition;
+
+    //   if (shouldScrollToNext) {
+    //     rendition.next();
+    //     window.scrollTo(currentPagePosition, 0);
+    //   } else if (scrollPositionInPreviousPage) {
+    //     rendition.prev();
+    //     window.scrollTo(previousPagePosition, 0);
+    //   }
+    // }
 
     function openEpub(url, epubOptions, renderOptions) {
       var settings = Object.assign(
