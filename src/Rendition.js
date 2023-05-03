@@ -121,6 +121,7 @@ class Rendition extends Component {
     const config = {
       minSpreadWidth: this.props.minSpreadWidth || 815,
       flow: this.props.flow || 'paginated',
+      method: this.props.method || 'blobUrl',
       gap: this.props.gap,
       fullsize: true,
     };

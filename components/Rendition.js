@@ -206,6 +206,7 @@ var Rendition = (function (_Component) {
         var config = {
           minSpreadWidth: this.props.minSpreadWidth || 815,
           flow: this.props.flow || 'paginated',
+          method: this.props.method || 'blobUrl',
           gap: this.props.gap,
           fullsize: true,
         };
@@ -661,7 +662,7 @@ var Rendition = (function (_Component) {
             __self: this,
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 454,
+              lineNumber: 455,
               columnNumber: 7,
             },
           },
@@ -677,7 +678,7 @@ var Rendition = (function (_Component) {
               __self: this,
               __source: {
                 fileName: _jsxFileName,
-                lineNumber: 455,
+                lineNumber: 456,
                 columnNumber: 9,
               },
             },
@@ -690,7 +691,7 @@ var Rendition = (function (_Component) {
               __self: this,
               __source: {
                 fileName: _jsxFileName,
-                lineNumber: 462,
+                lineNumber: 463,
                 columnNumber: 11,
               },
             }),
@@ -717,7 +718,7 @@ var Rendition = (function (_Component) {
             __self: this,
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 476,
+              lineNumber: 477,
               columnNumber: 7,
             },
           },
@@ -760,7 +761,7 @@ var Rendition = (function (_Component) {
                 __self: this,
                 __source: {
                   fileName: _jsxFileName,
-                  lineNumber: 487,
+                  lineNumber: 488,
                   columnNumber: 9,
                 },
               },

@@ -356,7 +356,6 @@ function closestMultiple(N, M) {
         {
           manager: 'default',
           overflow: 'visible',
-          method: 'blobUrl',
           fullsize: true,
           snap: isChrome,
         },

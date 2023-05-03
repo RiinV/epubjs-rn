@@ -121,6 +121,10 @@ class Epub extends Component {
       return true;
     }
 
+    if (nextProps.method != this.props.method) {
+      return true;
+    }
+
     if (nextProps.flow != this.props.flow) {
       return true;
     }
@@ -197,7 +201,6 @@ class Epub extends Component {
   }
 
   _loadBook(bookUrl) {
-    // console.log("loading book: ", bookUrl);
     const options = this.props.options || {};
 
     this.book = ePub({
@@ -344,6 +347,7 @@ class Epub extends Component {
         onTextSelectedContextMenuItems={this.props.onTextSelectedContextMenuItems}
         onCustomMenuSelection={this.props.onCustomMenuSelection}
         themes={this.props.themes}
+        method={this.props.method}
         theme={this.props.theme}
         fontSize={this.props.fontSize}
         font={this.props.font}

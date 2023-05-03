@@ -274,6 +274,10 @@ var Epub = (function (_Component) {
           return true;
         }
 
+        if (nextProps.method != this.props.method) {
+          return true;
+        }
+
         if (nextProps.flow != this.props.flow) {
           return true;
         }
@@ -517,6 +521,7 @@ var Epub = (function (_Component) {
               onTextSelectedContextMenuItems: this.props.onTextSelectedContextMenuItems,
               onCustomMenuSelection: this.props.onCustomMenuSelection,
               themes: this.props.themes,
+              method: this.props.method,
               theme: this.props.theme,
               fontSize: this.props.fontSize,
               font: this.props.font,
@@ -545,7 +550,7 @@ var Epub = (function (_Component) {
               __self: this,
               __source: {
                 fileName: _jsxFileName,
-                lineNumber: 320,
+                lineNumber: 323,
                 columnNumber: 7,
               },
             },
