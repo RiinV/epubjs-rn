@@ -267,7 +267,7 @@ class Epub extends Component {
   loadLocations() {
     return this.book.ready.then(() => {
       // Load in stored locations from json or local storage
-      var key = this.book.key() + '-locations';
+      var key = this.book.url.filename + '-locations';
 
       return AsyncStorage.getItem(key).then((stored) => {
         if (this.props.regenerateLocations != true && stored !== null) {
