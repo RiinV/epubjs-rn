@@ -421,14 +421,16 @@ var Epub = (function (_Component) {
         var _this3 = this;
 
         return this.book.ready.then(function () {
-          var key = _this3.book.key() + '-locations';
+          var key = _this3.book.url.filename + '-locations';
           return _asyncStorage.default.getItem(key).then(function (stored) {
             if (_this3.props.regenerateLocations != true && stored !== null) {
               return _this3.book.locations.load(stored);
             }
 
             return _this3.book.locations.generate(_this3.props.locationsCharBreak || 600).then(function (locations) {
-              _asyncStorage.default.setItem(key, _this3.book.locations.save());
+              if (_this3.props.cacheLocations) {
+                _asyncStorage.default.setItem(key, _this3.book.locations.save());
+              }
 
               return locations;
             });
